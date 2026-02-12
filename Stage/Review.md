@@ -2,30 +2,15 @@
 
 ## Sprint Review #1
 
-**Date**: February 2026  
-**Reviewer**: Stakeholder/Team Lead
+**Date**: February 12 2026  
+**Reviewer**: Internship supervisor
 
-### Completed Items
-- ✅ Implemented Flexbox layout system
-- ✅ Integrated Google Fonts for typography
-- ✅ Added FontAwesome icons for UI elements
-- ✅ Implemented input field validation (prevents empty submissions)
-- ✅ Fixed button highlight functionality for selected booking options
-- ✅ Standardized color scheme across all components
-- ✅ Added step navigation (forward/backward between form steps)
+## Current feedback
+- The supervisor informed me that I should take more use of flexbox.
+- I asked my supervisor about what I can do about the font and icon use. I'll have to implement the use for Google Fonts and FontAwesome (for icons).
+- We've caught an error and it was about the highlighted buttons not functioning properly if the button is selected.
+- I need to fix that the user won't be able to skip the important stuff by using ```required``` in the ```<div>```.
 
-### In Progress / Pending
-- ⏳ Multi-language support implementation using JSON translation files
-- ⏳ Tooltip integration for enhanced user guidance
-
-### Assessment
-Development progress is on track. Core functionality and UI elements are successfully implemented. The form validation and navigation features are working as expected.
-
-### Action Items
-1. Evaluate JSON-based translation system for multi-language support
-2. Implement tooltips for complex form fields
-3. Continue testing across different browsers and devices
-
-### Overall Status
-**Status**: On Schedule  
-**Next Review**: End of Sprint 2
+## What went well
+- Did alot in a short period of time.
+- CSS styling is good, but the tip was to commit as minimal styling as possible in the beginning. Focus on the functionality first.
