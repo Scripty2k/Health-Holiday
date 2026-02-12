@@ -62,16 +62,22 @@
 
           <div class="form-group">
             <label for="firstname">Voornaam</label>
-            <input
-              id="firstname"
-              :value="mainPerson.firstname"
-              @input="updateMainPersonField('firstname', $event.target.value)"
-              @blur="validateField('mainPerson', 'firstname')"
-              type="text"
-              placeholder="Voornaam"
-              :class="{ 'error': fieldErrors.mainPerson?.firstname }"
-            />
-            <span v-if="fieldErrors.mainPerson?.firstname" class="error-message">{{ fieldErrors.mainPerson.firstname }}</span>
+            <Field
+              name="firstname"
+              :modelValue="mainPerson.firstname"
+              @update:modelValue="updateMainPersonField('firstname', $event)"
+              :rules="validateFirstname"
+              v-slot="{ field, errors }"
+            >
+              <input
+                v-bind="field"
+                id="firstname"
+                type="text"
+                placeholder="Voornaam"
+                :class="{ 'error': errors.length > 0 }"
+              />
+            </Field>
+            <ErrorMessage name="firstname" class="error-message" />
           </div>
 
           <div class="form-group">
@@ -90,16 +96,22 @@
 
           <div class="form-group">
             <label for="birthdate">Geboortedatum</label>
-            <input
-              id="birthdate"
-              :value="mainPerson.birthdate"
-              @input="updateMainPersonField('birthdate', $event.target.value)"
-              @blur="validateField('mainPerson', 'birthdate')"
-              type="text"
-              placeholder="DD-MM-JJJJ"
-              :class="{ 'error': fieldErrors.mainPerson?.birthdate }"
-            />
-            <span v-if="fieldErrors.mainPerson?.birthdate" class="error-message">{{ fieldErrors.mainPerson.birthdate }}</span>
+            <Field
+              name="birthdate"
+              :modelValue="mainPerson.birthdate"
+              @update:modelValue="updateMainPersonField('birthdate', $event)"
+              :rules="validateBirthdate"
+              v-slot="{ field, errors }"
+            >
+              <input
+                v-bind="field"
+                id="birthdate"
+                type="text"
+                placeholder="DD-MM-JJJJ"
+                :class="{ 'error': errors.length > 0 }"
+              />
+            </Field>
+            <ErrorMessage name="birthdate" class="error-message" />
           </div>
 
           <div class="form-group">
@@ -247,6 +259,7 @@
 
 <script setup>
 import { ref, watch, computed } from 'vue'
+import { Field, ErrorMessage } from 'vee-validate'
 import ParticipantForm from './ParticipantForm.vue'
 
 const props = defineProps({
@@ -366,6 +379,24 @@ const isValidDate = (dateString) => {
          date.getDate() === day
 }
 
+// VeeValidate validation function for firstname
+const validateFirstname = (value) => {
+  if (!value || !value.trim()) {
+    return 'Vul je voornaam in'
+  }
+  return true // Validation passed
+}
+
+// VeeValidate validation function for birthdate
+const validateBirthdate = (value) => {
+  if (!value || !value.trim()) {
+    return 'Vul je geboortedatum in (DD-MM-JJJJ)'
+  }
+  if (!isValidDate(value)) {
+    return 'Vul je correcte geboortedatum in (DD-MM-JJJJ)'
+  }
+  return true // Validation passed
+}
 
 // These are for alle the errors if the user doesn't fill in the form correctly or forgets to fill in a field.
 const validateField = (personType, fieldName) => {
