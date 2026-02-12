@@ -10,6 +10,8 @@
 - I asked my supervisor about what I can do about the font and icon use. I'll have to implement the use for Google Fonts and FontAwesome (for icons).
 - We've caught an error and it was about the highlighted buttons not functioning properly if the button is selected.
 - I need to fix that the user won't be able to skip the important stuff by using ```required``` in the ```<div>```.
+- I also got a really great tip, since I'm making a form and that I need to fill out everytime for testing, that there is this extension that fills it out 
+    automatically. Really handy extension.
 
 ## What went well
 - Did alot in a short period of time.
