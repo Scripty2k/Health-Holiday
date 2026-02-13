@@ -185,13 +185,13 @@
           </button>
           
           <div v-show="openSections.transferOutbound" class="section-content">
-            <label :class="['option-card', { selected: extras.transferOutbound === 'groepstransfer' }]">
+            <label :class="['option-card', { selected: extras.transferOutbound === 'group_transfer' }]">
               <input 
                 type="radio" 
                 name="transfer-outbound"
-                value="groepstransfer"
-                :checked="extras.transferOutbound === 'groepstransfer'"
-                @change="updateSingleExtra('transferOutbound', 'groepstransfer')"
+                value="group_transfer"
+                :checked="extras.transferOutbound === 'group_transfer'"
+                @change="updateSingleExtra('transferOutbound', 'group_transfer')"
               />
               <span class="option-content">
                 <span class="option-text">
@@ -202,13 +202,13 @@
               </span>
             </label>
 
-            <label :class="['option-card', { selected: extras.transferOutbound === 'prive' }]">
+            <label :class="['option-card', { selected: extras.transferOutbound === 'private' }]">
               <input 
                 type="radio" 
                 name="transfer-outbound"
-                value="prive"
-                :checked="extras.transferOutbound === 'prive'"
-                @change="updateSingleExtra('transferOutbound', 'prive')"
+                value="private"
+                :checked="extras.transferOutbound === 'private'"
+                @change="updateSingleExtra('transferOutbound', 'private')"
               />
               <span class="option-content">
                 <span class="option-text">
@@ -246,13 +246,13 @@
           </button>
           
           <div v-show="openSections.transferReturn" class="section-content">
-            <label :class="['option-card', { selected: extras.transferReturn === 'groepstransfer' }]">
+            <label :class="['option-card', { selected: extras.transferReturn === 'group_transfer' }]">
               <input 
                 type="radio" 
                 name="transfer-return"
-                value="groepstransfer"
-                :checked="extras.transferReturn === 'groepstransfer'"
-                @change="updateSingleExtra('transferReturn', 'groepstransfer')"
+                value="group_transfer"
+                :checked="extras.transferReturn === 'group_transfer'"
+                @change="updateSingleExtra('transferReturn', 'group_transfer')"
               />
               <span class="option-content">
                 <span class="option-text">
@@ -263,13 +263,13 @@
               </span>
             </label>
 
-            <label :class="['option-card', { selected: extras.transferReturn === 'prive' }]">
+            <label :class="['option-card', { selected: extras.transferReturn === 'private' }]">
               <input 
                 type="radio" 
                 name="transfer-return"
-                value="prive"
-                :checked="extras.transferReturn === 'prive'"
-                @change="updateSingleExtra('transferReturn', 'prive')"
+                value="private"
+                :checked="extras.transferReturn === 'private'"
+                @change="updateSingleExtra('transferReturn', 'private')"
               />
               <span class="option-content">
                 <span class="option-text">

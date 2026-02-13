@@ -34,7 +34,7 @@
         </div>
       </div>
 
-      <form @submit.prevent="handleSubmit" class="clean-form" novalidate>
+      <Form @submit="handleSubmit" class="clean-form" v-slot="{ errors }">
         <!-- Main Person Section -->
         <div class="section-card">
           <h3>Mijn gegevens</h3>
@@ -82,16 +82,22 @@
 
           <div class="form-group">
             <label for="lastname">Achternaam</label>
-            <input
-              id="lastname"
-              :value="mainPerson.lastname"
-              @input="updateMainPersonField('lastname', $event.target.value)"
-              @blur="validateField('mainPerson', 'lastname')"
-              type="text"
-              placeholder="Achternaam"
-              :class="{ 'error': fieldErrors.mainPerson?.lastname }"
-            />
-            <span v-if="fieldErrors.mainPerson?.lastname" class="error-message">{{ fieldErrors.mainPerson.lastname }}</span>
+            <Field
+              name="lastname"
+              :modelValue="mainPerson.lastname"
+              @update:modelValue="updateMainPersonField('lastname', $event)"
+              :rules="validateLastname"
+              v-slot="{ field, errors }"
+            >
+              <input
+                v-bind="field"
+                id="lastname"
+                type="text"
+                placeholder="Achternaam"
+                :class="{ 'error': errors.length > 0 }"
+              />
+            </Field>
+            <ErrorMessage name="lastname" class="error-message" />
           </div>
 
           <div class="form-group">
@@ -121,11 +127,11 @@
               :value="mainPerson.nationality"
               @change="updateMainPersonField('nationality', $event.target.value)"
             >
-              <option value="nederlands">Nederlands</option>
-              <option value="belgisch">Belgisch</option>
-              <option value="duits">Duits</option>
-              <option value="frans">Frans</option>
-              <option value="anders">Anders</option>
+              <option value="dutch">Nederlands</option>
+              <option value="belgian">Belgisch</option>
+              <option value="german">Duits</option>
+              <option value="french">Frans</option>
+              <option value="other">Anders</option>
             </select>
           </div>
 
@@ -136,40 +142,52 @@
               :value="mainPerson.country"
               @change="updateMainPersonField('country', $event.target.value)"
             >
-              <option value="nederland">Nederland</option>
-              <option value="belgie">België</option>
-              <option value="duitsland">Duitsland</option>
-              <option value="frankrijk">Frankrijk</option>
-              <option value="anders">Anders</option>
+              <option value="netherlands">Nederland</option>
+              <option value="belgium">België</option>
+              <option value="germany">Duitsland</option>
+              <option value="france">Frankrijk</option>
+              <option value="other">Anders</option>
             </select>
           </div>
 
           <div class="address-row">
             <div class="form-group">
               <label for="postcode">Postcode</label>
-              <input
-                id="postcode"
-                :value="mainPerson.postcode"
-                @input="updateMainPersonField('postcode', $event.target.value)"
-                @blur="validateField('mainPerson', 'postcode')"
-                type="text"
-                placeholder="1111"
-                :class="{ 'error': fieldErrors.mainPerson?.postcode }"
-              />
-              <span v-if="fieldErrors.mainPerson?.postcode" class="error-message">{{ fieldErrors.mainPerson.postcode }}</span>
+              <Field
+                name="postcode"
+                :modelValue="mainPerson.postcode"
+                @update:modelValue="updateMainPersonField('postcode', $event)"
+                :rules="validatePostcode"
+                v-slot="{ field, errors }"
+              >
+                <input
+                  v-bind="field"
+                  id="postcode"
+                  type="text"
+                  placeholder="1111"
+                  :class="{ 'error': errors.length > 0 }"
+                />
+              </Field>
+              <ErrorMessage name="postcode" class="error-message" />
             </div>
             <div class="form-group">
               <label for="housenumber">Huisnummer</label>
-              <input
-                id="housenumber"
-                :value="mainPerson.housenumber"
-                @input="updateMainPersonField('housenumber', $event.target.value)"
-                @blur="validateField('mainPerson', 'housenumber')"
-                type="text"
-                placeholder="12"
-                :class="{ 'error': fieldErrors.mainPerson?.housenumber }"
-              />
-              <span v-if="fieldErrors.mainPerson?.housenumber" class="error-message">{{ fieldErrors.mainPerson.housenumber }}</span>
+              <Field
+                name="housenumber"
+                :modelValue="mainPerson.housenumber"
+                @update:modelValue="updateMainPersonField('housenumber', $event)"
+                :rules="validateHousenumber"
+                v-slot="{ field, errors }"
+              >
+                <input
+                  v-bind="field"
+                  id="housenumber"
+                  type="text"
+                  placeholder="12"
+                  :class="{ 'error': errors.length > 0 }"
+                />
+              </Field>
+              <ErrorMessage name="housenumber" class="error-message" />
             </div>
             <div class="form-group">
               <label for="addition">Toevoeging <span class="optional">(optioneel)</span></label>
@@ -198,30 +216,42 @@
 
           <div class="form-group">
             <label for="phone">Telefoon</label>
-            <input
-              id="phone"
-              :value="mainPerson.phone"
-              @input="updateMainPersonField('phone', $event.target.value)"
-              @blur="validateField('mainPerson', 'phone')"
-              type="tel"
-              placeholder="Telefoonnummer"
-              :class="{ 'error': fieldErrors.mainPerson?.phone }"
-            />
-            <span v-if="fieldErrors.mainPerson?.phone" class="error-message">{{ fieldErrors.mainPerson.phone }}</span>
+            <Field
+              name="phone"
+              :modelValue="mainPerson.phone"
+              @update:modelValue="updateMainPersonField('phone', $event)"
+              :rules="validatePhone"
+              v-slot="{ field, errors }"
+            >
+              <input
+                v-bind="field"
+                id="phone"
+                type="tel"
+                placeholder="Telefoonnummer"
+                :class="{ 'error': errors.length > 0 }"
+              />
+            </Field>
+            <ErrorMessage name="phone" class="error-message" />
           </div>
 
           <div class="form-group">
             <label for="email">E-mailadres</label>
-            <input
-              id="email"
-              :value="mainPerson.email"
-              @input="updateMainPersonField('email', $event.target.value)"
-              @blur="validateField('mainPerson', 'email')"
-              type="email"
-              placeholder="E-mailadres"
-              :class="{ 'error': fieldErrors.mainPerson?.email }"
-            />
-            <span v-if="fieldErrors.mainPerson?.email" class="error-message">{{ fieldErrors.mainPerson.email }}</span>
+            <Field
+              name="email"
+              :modelValue="mainPerson.email"
+              @update:modelValue="updateMainPersonField('email', $event)"
+              :rules="validateEmail"
+              v-slot="{ field, errors }"
+            >
+              <input
+                v-bind="field"
+                id="email"
+                type="email"
+                placeholder="E-mailadres"
+                :class="{ 'error': errors.length > 0 }"
+              />
+            </Field>
+            <ErrorMessage name="email" class="error-message" />
           </div>
 
           <div class="checkbox-group">
@@ -243,23 +273,21 @@
           :participant="participant"
           :participantNumber="index + 1"
           :showRemove="participants.length > 1"
-          :errors="fieldErrors.participants[index]"
           @update="(updates) => handleParticipantUpdate(index, updates)"
           @remove="handleRemoveParticipant(index)"
-          @validate="(field) => validateParticipantField(index, field)"
         />
 
         <button type="submit" :disabled="isSubmitting" class="submit-btn">
           {{ isSubmitting ? 'Verzenden...' : 'Volgende' }}
         </button>
-      </form>
+      </Form>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref, watch, computed } from 'vue'
-import { Field, ErrorMessage } from 'vee-validate'
+import { Form, Field, ErrorMessage } from 'vee-validate'
 import ParticipantForm from './ParticipantForm.vue'
 
 const props = defineProps({
@@ -279,10 +307,6 @@ const isSubmitting = ref(false)
 const showParticipantManager = ref(false)
 const addressInfo = ref('')
 const isLoadingAddress = ref(false)
-const fieldErrors = ref({
-  mainPerson: {},
-  participants: {}
-})
 
 const toggleParticipantManager = () => {
   showParticipantManager.value = !showParticipantManager.value
@@ -379,15 +403,21 @@ const isValidDate = (dateString) => {
          date.getDate() === day
 }
 
-// VeeValidate validation function for firstname
+// VeeValidate validation functions
 const validateFirstname = (value) => {
   if (!value || !value.trim()) {
     return 'Vul je voornaam in'
   }
-  return true // Validation passed
+  return true
 }
 
-// VeeValidate validation function for birthdate
+const validateLastname = (value) => {
+  if (!value || !value.trim()) {
+    return 'Vul je achternaam in'
+  }
+  return true
+}
+
 const validateBirthdate = (value) => {
   if (!value || !value.trim()) {
     return 'Vul je geboortedatum in (DD-MM-JJJJ)'
@@ -395,171 +425,41 @@ const validateBirthdate = (value) => {
   if (!isValidDate(value)) {
     return 'Vul je correcte geboortedatum in (DD-MM-JJJJ)'
   }
-  return true // Validation passed
+  return true
 }
 
-// These are for alle the errors if the user doesn't fill in the form correctly or forgets to fill in a field.
-const validateField = (personType, fieldName) => {
-  if (personType === 'mainPerson') {
-    const value = props.mainPerson[fieldName]
-    
-    if (fieldName === 'firstname') {
-      fieldErrors.value.mainPerson.firstname = !value?.trim() ? 'Vul je voornaam in' : ''
-    } else if (fieldName === 'lastname') {
-      fieldErrors.value.mainPerson.lastname = !value?.trim() ? 'Vul je achternaam in' : ''
-    } else if (fieldName === 'birthdate') {
-      if (!value?.trim()) {
-        fieldErrors.value.mainPerson.birthdate = 'Vul je geboortedatum in (DD-MM-JJJJ)'
-      } else if (!isValidDate(value)) {
-        fieldErrors.value.mainPerson.birthdate = 'Vul je correcte geboortedatum in (DD-MM-JJJJ)'
-      } else {
-        fieldErrors.value.mainPerson.birthdate = ''
-      }
-    } else if (fieldName === 'postcode') {
-      fieldErrors.value.mainPerson.postcode = !value?.trim() ? 'Vul je postcode in' : ''
-    } else if (fieldName === 'housenumber') {
-      fieldErrors.value.mainPerson.housenumber = !value?.trim() ? 'Vul je huisnummer in' : ''
-    } else if (fieldName === 'phone') {
-      fieldErrors.value.mainPerson.phone = !value?.trim() ? 'Vul je telefoonnummer in' : ''
-    } else if (fieldName === 'email') {
-      if (!value?.trim()) {
-        fieldErrors.value.mainPerson.email = 'Vul je e-mailadres in'
-      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-        fieldErrors.value.mainPerson.email = 'Vul een geldig e-mailadres in'
-      } else {
-        fieldErrors.value.mainPerson.email = ''
-      }
-    }
+const validatePostcode = (value) => {
+  if (!value || !value.trim()) {
+    return 'Vul je postcode in'
   }
+  return true
 }
 
-// Similar validation for participant fields
-const validateParticipantField = (index, fieldName) => {
-  if (!fieldErrors.value.participants[index]) {
-    fieldErrors.value.participants[index] = {}
+const validateHousenumber = (value) => {
+  if (!value || !value.trim()) {
+    return 'Vul je huisnummer in'
   }
-  
-  const participant = props.participants[index]
-  const value = participant[fieldName]
-  
-  if (fieldName === 'firstname') {
-    fieldErrors.value.participants[index].firstname = !value?.trim() ? 'Vul je voornaam in' : ''
-  } else if (fieldName === 'lastname') {
-    fieldErrors.value.participants[index].lastname = !value?.trim() ? 'Vul je achternaam in' : ''
-  } else if (fieldName === 'birthdate') {
-    if (!value?.trim()) {
-      fieldErrors.value.participants[index].birthdate = 'Vul je geboortedatum in (DD-MM-JJJJ)'
-    } else if (!isValidDate(value)) {
-      fieldErrors.value.participants[index].birthdate = 'Vul je correcte geboortedatum in (DD-MM-JJJJ)'
-    } else {
-      fieldErrors.value.participants[index].birthdate = ''
-    }
-  } else if (fieldName === 'postcode') {
-    fieldErrors.value.participants[index].postcode = !value?.trim() ? 'Vul je postcode in' : ''
-  } else if (fieldName === 'housenumber') {
-    fieldErrors.value.participants[index].housenumber = !value?.trim() ? 'Vul je huisnummer in' : ''
-  } else if (fieldName === 'phone') {
-    fieldErrors.value.participants[index].phone = !value?.trim() ? 'Vul je telefoonnummer in' : ''
-  } else if (fieldName === 'email') {
-    if (!value?.trim()) {
-      fieldErrors.value.participants[index].email = 'Vul je e-mailadres in'
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-      fieldErrors.value.participants[index].email = 'Vul een geldig e-mailadres in'
-    } else {
-      fieldErrors.value.participants[index].email = ''
-    }
-  }
+  return true
 }
 
-const validateAllFields = () => {
-  let isValid = true
-  
-  // Validate main person
-  if (!props.mainPerson.firstname?.trim()) {
-    fieldErrors.value.mainPerson.firstname = 'Vul je voornaam in'
-    isValid = false
+const validatePhone = (value) => {
+  if (!value || !value.trim()) {
+    return 'Vul je telefoonnummer in'
   }
-  if (!props.mainPerson.lastname?.trim()) {
-    fieldErrors.value.mainPerson.lastname = 'Vul je achternaam in'
-    isValid = false
+  return true
+}
+
+const validateEmail = (value) => {
+  if (!value || !value.trim()) {
+    return 'Vul je e-mailadres in'
   }
-  if (!props.mainPerson.birthdate?.trim()) {
-    fieldErrors.value.mainPerson.birthdate = 'Vul je geboortedatum in (DD-MM-JJJJ)'
-    isValid = false
-  } else if (!isValidDate(props.mainPerson.birthdate)) {
-    fieldErrors.value.mainPerson.birthdate = 'Vul je correcte geboortedatum in (DD-MM-JJJJ)'
-    isValid = false
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+    return 'Vul een geldig e-mailadres in'
   }
-  if (!props.mainPerson.postcode?.trim()) {
-    fieldErrors.value.mainPerson.postcode = 'Vul je postcode in'
-    isValid = false
-  }
-  if (!props.mainPerson.housenumber?.trim()) {
-    fieldErrors.value.mainPerson.housenumber = 'Vul je huisnummer in'
-    isValid = false
-  }
-  if (!props.mainPerson.phone?.trim()) {
-    fieldErrors.value.mainPerson.phone = 'Vul je telefoonnummer in'
-    isValid = false
-  }
-  if (!props.mainPerson.email?.trim()) {
-    fieldErrors.value.mainPerson.email = 'Vul je e-mailadres in'
-    isValid = false
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(props.mainPerson.email)) {
-    fieldErrors.value.mainPerson.email = 'Vul een geldig e-mailadres in'
-    isValid = false
-  }
-  
-  // Validate participants
-  props.participants.forEach((participant, index) => {
-    if (!fieldErrors.value.participants[index]) {
-      fieldErrors.value.participants[index] = {}
-    }
-    
-    if (!participant.firstname?.trim()) {
-      fieldErrors.value.participants[index].firstname = 'Vul je voornaam in'
-      isValid = false
-    }
-    if (!participant.lastname?.trim()) {
-      fieldErrors.value.participants[index].lastname = 'Vul je achternaam in'
-      isValid = false
-    }
-    if (!participant.birthdate?.trim()) {
-      fieldErrors.value.participants[index].birthdate = 'Vul je geboortedatum in (DD-MM-JJJJ)'
-      isValid = false
-    } else if (!isValidDate(participant.birthdate)) {
-      fieldErrors.value.participants[index].birthdate = 'Vul je correcte geboortedatum in (DD-MM-JJJJ)'
-      isValid = false
-    }
-    if (!participant.postcode?.trim()) {
-      fieldErrors.value.participants[index].postcode = 'Vul je postcode in'
-      isValid = false
-    }
-    if (!participant.housenumber?.trim()) {
-      fieldErrors.value.participants[index].housenumber = 'Vul je huisnummer in'
-      isValid = false
-    }
-    if (!participant.phone?.trim()) {
-      fieldErrors.value.participants[index].phone = 'Vul je telefoonnummer in'
-      isValid = false
-    }
-    if (!participant.email?.trim()) {
-      fieldErrors.value.participants[index].email = 'Vul je e-mailadres in'
-      isValid = false
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(participant.email)) {
-      fieldErrors.value.participants[index].email = 'Vul een geldig e-mailadres in'
-      isValid = false
-    }
-  })
-  
-  return isValid
+  return true
 }
 
 const handleSubmit = async () => {
-  if (!validateAllFields()) {
-    return
-  }
-  
   isSubmitting.value = true
   
   // Simulate API call
