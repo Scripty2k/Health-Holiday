@@ -443,9 +443,9 @@ const handleSkip = () => {
 <style scoped>
 .lifestyle-container {
   width: 100%;
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 0.5rem;
   box-sizing: border-box;
 }
 
@@ -465,6 +465,8 @@ const handleSkip = () => {
   color: #4a4a4a;
   font-size: 1rem;
   margin-bottom: 0.5rem;
+  text-transform: none;
+  letter-spacing: normal;
 }
 
 .skip-notice {
@@ -493,7 +495,7 @@ const handleSkip = () => {
   background: white;
   border: 1px solid #e5ddd0;
   border-radius: 12px;
-  padding: 2rem;
+  padding: 1.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 

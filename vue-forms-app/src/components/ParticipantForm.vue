@@ -5,26 +5,35 @@
     </div>
     
     <div class="form-group">
-      <div class="radio-group">
-        <label class="radio-label">
-          <input 
-            type="radio" 
-            :value="'man'" 
-            :checked="participant.gender === 'man'"
-            @change="updateField('gender', 'man')"
-          />
-          <span>Man</span>
-        </label>
-        <label class="radio-label">
-          <input 
-            type="radio" 
-            :value="'vrouw'" 
-            :checked="participant.gender === 'vrouw'"
-            @change="updateField('gender', 'vrouw')"
-          />
-          <span>Vrouw</span>
-        </label>
-      </div>
+      <Field
+        :name="'participant-gender-' + participantNumber"
+        :modelValue="participant.gender"
+        @update:modelValue="updateField('gender', $event)"
+        :rules="validateGender"
+        v-slot="{ field, errors }"
+      >
+        <div class="radio-group" :class="{ 'error': errors.length > 0 }">
+          <label class="radio-label">
+            <input 
+              type="radio" 
+              :value="'man'" 
+              :checked="participant.gender === 'man'"
+              @change="updateField('gender', 'man')"
+            />
+            <span>Man</span>
+          </label>
+          <label class="radio-label">
+            <input 
+              type="radio" 
+              :value="'vrouw'" 
+              :checked="participant.gender === 'vrouw'"
+              @change="updateField('gender', 'vrouw')"
+            />
+            <span>Vrouw</span>
+          </label>
+        </div>
+      </Field>
+      <ErrorMessage :name="'participant-gender-' + participantNumber" class="error-message" />
     </div>
 
     <div class="form-group">
@@ -262,6 +271,13 @@ const isValidDate = (dateString) => {
 }
 
 // VeeValidate validation functions
+const validateGender = (value) => {
+  if (!value || !value.trim()) {
+    return 'Kies je geslacht'
+  }
+  return true
+}
+
 const validateFirstname = (value) => {
   if (!value || !value.trim()) {
     return 'Vul je voornaam in'
@@ -323,7 +339,7 @@ const validateEmail = (value) => {
   background: #ffffff;
   border: 1px solid #e5ddd0;
   border-radius: 12px;
-  padding: 2rem;
+  padding: 1.5rem;
   margin-bottom: 1.5rem;
   box-sizing: border-box;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
@@ -404,6 +420,14 @@ select:focus {
 .radio-group {
   display: flex;
   gap: 2rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.radio-group.error {
+  background: #fff5f5;
+  border: 2px solid #dc3545;
 }
 
 .radio-label {
@@ -423,8 +447,12 @@ select:focus {
 
 .address-row {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 1rem;
+}
+
+.address-row .form-group:last-child {
+  grid-column: 1 / -1;
 }
 
 .info-text {

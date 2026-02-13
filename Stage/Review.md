@@ -16,3 +16,20 @@
 ## What went well
 - Did alot in a short period of time.
 - CSS styling is good, but the tip was to commit as minimal styling as possible in the beginning. Focus on the functionality first.
+
+
+
+
+## Sprint Review #2
+
+**Date**: February 13 2026  
+**Reviewer**: Internship supervisor
+
+## Current feedback
+- Remove the delete buttons on the participant forms since there is a popup menu where you could change the amount at once
+- Make error messages for when the user fills out something incorrectly, or nothing at all
+- Use veevalidate for better form compatibility 
+- Less padding and better responsiveness
+
+## What went well
+- Overall design is decent

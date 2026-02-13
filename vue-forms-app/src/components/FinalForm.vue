@@ -124,9 +124,9 @@ const handleFinish = () => {
 <style scoped>
 .form-container {
   width: 100%;
-  max-width: 800px;
+  max-width: 1200px;
   margin: 2rem auto;
-  padding: 0 1rem;
+  padding: 0 0.5rem;
   box-sizing: border-box;
 }
 
@@ -151,6 +151,8 @@ h2 {
   color: #4a4a4a;
   margin: 0;
   font-size: 1rem;
+  text-transform: none;
+  letter-spacing: normal;
 }
 
 .summary-section {

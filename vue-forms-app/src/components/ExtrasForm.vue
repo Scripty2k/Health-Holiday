@@ -563,9 +563,9 @@ const handleSkip = () => {
 <style scoped>
 .extras-container {
   width: 100%;
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 0.5rem;
   box-sizing: border-box;
 }
 
@@ -583,8 +583,11 @@ const handleSkip = () => {
 
 .subtitle {
   color: #4a4a4a;
-  font-size: 1rem;
+  font-size: 0.9rem;
   margin-bottom: 0.5rem;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
 }
 
 .skip-notice {
@@ -619,7 +622,7 @@ const handleSkip = () => {
 
 .section-header {
   width: 100%;
-  padding: 1.25rem 1.5rem;
+  padding: 1rem 1.25rem;
   background: #e8dcc8;
   border: none;
   display: flex;
@@ -646,7 +649,7 @@ const handleSkip = () => {
 }
 
 .section-content {
-  padding: 1.5rem;
+  padding: 1.25rem;
   background: white;
 }
 
@@ -739,7 +742,7 @@ const handleSkip = () => {
   background: white;
   border: 1px solid #e5ddd0;
   border-radius: 12px;
-  padding: 2rem;
+  padding: 1.5rem;
   margin-top: 1rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     font-family: 'lato', sans-serif;

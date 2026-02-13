@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="booking">
     <header class="app-header">
       <h1>Bijna op Health Holiday</h1>
       <p>Vul je gegevens in om je je boeking compleet te maken.</p>
@@ -274,7 +274,7 @@ const goToStep = (stepNumber) => {
 </script>
 
 <style>
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -298,7 +298,7 @@ input, select, textarea, button {
   font-family: 'Lato', sans-serif;
 }
 
-#app {
+#booking {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -358,5 +358,5 @@ input, select, textarea, button {
   .main-content {
     padding: 1rem;
   }
-}
+} */
 </style>

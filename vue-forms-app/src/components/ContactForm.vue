@@ -1,7 +1,6 @@
 <template>
   <div class="form-container">
     <div class="form-wrapper">
-      <h1 class="main-title">Vul je gegevens in om je booking compleet te maken.</h1>
 
       <!-- Participants Summary -->
       <div class="participants-summary">
@@ -18,46 +17,41 @@
         </button>
       </div>
 
-      <!-- Participant Manager Modal -->
-      <div v-if="showParticipantManager" class="modal-overlay" @click="toggleParticipantManager">
-        <div class="modal-content" @click.stop>
-          <h3>Aantal deelnemers aanpassen</h3>
-          <div class="participant-counter">
-            <label>Aantal volwassenen:</label>
-            <div class="counter-controls">
-              <button type="button" @click="decreaseParticipants" :disabled="participants.length <= 1">-</button>
-              <span>{{ participants.length }}</span>
-              <button type="button" @click="increaseParticipants">+</button>
-            </div>
-          </div>
-          <button type="button" @click="toggleParticipantManager" class="close-modal-btn">Sluiten</button>
-        </div>
-      </div>
-
       <Form @submit="handleSubmit" class="clean-form" v-slot="{ errors }">
         <!-- Main Person Section -->
         <div class="section-card">
           <h3>Mijn gegevens</h3>
           
           <div class="form-group">
-            <div class="radio-group">
-              <label class="radio-label">
-                <input 
-                  type="radio" 
-                  :checked="mainPerson.gender === 'man'"
-                  @change="updateMainPersonField('gender', 'man')"
-                />
-                <span>Man</span>
-              </label>
-              <label class="radio-label">
-                <input 
-                  type="radio" 
-                  :checked="mainPerson.gender === 'vrouw'"
-                  @change="updateMainPersonField('gender', 'vrouw')"
-                />
-                <span>Vrouw</span>
-              </label>
-            </div>
+            <Field
+              name="gender"
+              :modelValue="mainPerson.gender"
+              @update:modelValue="updateMainPersonField('gender', $event)"
+              :rules="validateGender"
+              v-slot="{ field, errors }"
+            >
+              <div class="radio-group" :class="{ 'error': errors.length > 0 }">
+                <label class="radio-label">
+                  <input 
+                    type="radio" 
+                    :checked="mainPerson.gender === 'man'"
+                    @change="updateMainPersonField('gender', 'man')"
+                    value="man"
+                  />
+                  <span>Man</span>
+                </label>
+                <label class="radio-label">
+                  <input 
+                    type="radio" 
+                    :checked="mainPerson.gender === 'vrouw'"
+                    @change="updateMainPersonField('gender', 'vrouw')"
+                    value="vrouw"
+                  />
+                  <span>Vrouw</span>
+                </label>
+              </div>
+            </Field>
+            <ErrorMessage name="gender" class="error-message" />
           </div>
 
           <div class="form-group">
@@ -283,6 +277,26 @@
       </Form>
     </div>
   </div>
+
+  <!-- Participant Manager Modal (Teleported to body) -->
+  <Teleport to="body">
+    <Transition name="modal-fade">
+      <div v-if="showParticipantManager" class="modal-overlay" @click="toggleParticipantManager">
+        <div class="modal-content" @click.stop>
+          <h3>Aantal deelnemers aanpassen</h3>
+          <div class="participant-counter">
+            <label>Aantal volwassenen:</label>
+            <div class="counter-controls">
+              <button type="button" @click="decreaseParticipants" :disabled="participants.length <= 1">-</button>
+              <span>{{ participants.length }}</span>
+              <button type="button" @click="increaseParticipants">+</button>
+            </div>
+          </div>
+          <button type="button" @click="toggleParticipantManager" class="close-modal-btn">Sluiten</button>
+        </div>
+      </div>
+    </Transition>
+  </Teleport>
 </template>
 
 <script setup>
@@ -404,6 +418,13 @@ const isValidDate = (dateString) => {
 }
 
 // VeeValidate validation functions
+const validateGender = (value) => {
+  if (!value || !value.trim()) {
+    return 'Kies je geslacht'
+  }
+  return true
+}
+
 const validateFirstname = (value) => {
   if (!value || !value.trim()) {
     return 'Vul je voornaam in'
@@ -476,9 +497,9 @@ const handleSubmit = async () => {
 <style scoped>
 .form-container {
   width: 100%;
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 0.5rem;
   box-sizing: border-box;
 }
 
@@ -573,6 +594,8 @@ select.error {
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  overflow-y: auto;
+  padding: 2rem 0;
 }
 
 .modal-content {
@@ -582,6 +605,29 @@ select.error {
   max-width: 400px;
   width: 90%;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  margin: auto;
+  position: relative;
+}
+
+/* Modal Transitions */
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.modal-fade-enter-active .modal-content,
+.modal-fade-leave-active .modal-content {
+  transition: transform 0.3s ease;
+}
+
+.modal-fade-enter-from,
+.modal-fade-leave-to {
+  opacity: 0;
+}
+
+.modal-fade-enter-from .modal-content,
+.modal-fade-leave-to .modal-content {
+  transform: scale(0.9);
 }
 
 .modal-content h3 {
@@ -660,7 +706,7 @@ select.error {
   background: #ffffff;
   border: 1px solid #e5ddd0;
   border-radius: 12px;
-  padding: 2rem;
+  padding: 1.5rem;
   margin-bottom: 1.5rem;
   box-sizing: border-box;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
@@ -726,6 +772,14 @@ select:focus {
   display: flex;
   gap: 2rem;
   font-family: 'lato', sans-serif;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.radio-group.error {
+  background: #fff5f5;
+  border: 2px solid #dc3545;
 }
 
 .radio-label {
@@ -746,8 +800,12 @@ select:focus {
 
 .address-row {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 1rem;
+}
+
+.address-row .form-group:last-child {
+  grid-column: 1 / -1;
 }
 
 .checkbox-group {

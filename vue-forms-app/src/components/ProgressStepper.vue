@@ -56,12 +56,13 @@ const handleStepClick = (stepNumber) => {
   justify-content: center;
   align-items: center;
   padding: 20px;
-  background: #F5E5D3;
+  background: #FAF4E4;
 }
 
 .step-wrapper {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .step-item {
@@ -69,19 +70,23 @@ const handleStepClick = (stepNumber) => {
   flex-direction: column;
   align-items: center;
   gap: 8px;
+  min-width: 60px;
 }
 
 .step-circle {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #88827F;
-  color: white;
+  color: #FAF4E5;
   font-weight: 600;
   transition: all 0.3s;
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
 }
 
 .step-circle.clickable {
@@ -95,27 +100,41 @@ const handleStepClick = (stepNumber) => {
 
 .step-circle.active {
   background: #3A6F72;
-  color: white;
+  color: #FAF4E5;
   border-color: #3A6F72;
-  /* box-shadow: 0 2px 8px rgba(45, 122, 79, 0.3); */
 }
 
 .step-circle.completed {
   background: #3A6F72;
-  color: white;
+  color: #FAF4E5;
   border-color: #3A6F72;
 }
 
 .check-icon {
-  color: white;
+  color: #FAF4E5;
   stroke: white;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }
 
 .step-label {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: #666;
   font-weight: 500;
-  font-family: 'lato', sans-serif;
+  font-family: 'Lato', sans-serif;
+  text-align: center;
+  max-width: 90px;
+  word-wrap: break-word;
+  hyphens: auto;
+  line-height: 1.2;
+  min-height: 2.4em;
+  max-height: 2.4em;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .step-item:has(.step-circle.active) .step-label,
@@ -125,38 +144,87 @@ const handleStepClick = (stepNumber) => {
 }
 
 .step-line {
-  width: 150px;
+  width: 80px;
   height: 0;
-  border-top: 3px dashed #88827F;
-  margin: 0 20px;
-  margin-bottom: 28px;
+  border-top: 1px dashed #88827F;
+  margin: 0 10px;
+  margin-bottom: 26px;
   transition: all 0.3s;
+  flex-shrink: 0;
 }
 
 .step-line.completed {
   border-color: #666666;
-  border-style: dashed;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .step-line {
-    width: 60px;
-    margin: 0 10px;
-  }
-  
-  .step-circle {
-    width: 36px;
-    height: 36px;
-    font-size: 0.9rem;
+    width: 100px;
+    margin: 0 15px;
   }
   
   .step-label {
-    font-size: 0.75rem;
-    font-family: 'Lato', sans-serif;
+    font-size: 0.8rem;
+    max-width: 100px;
   }
-
-p {
-  font-family: 'Lato', sans-serif;
 }
+
+@media (max-width: 768px) {
+  .progress-stepper {
+    padding: 15px 10px;
+  }
+  
+  .step-line {
+    width: 50px;
+    margin: 0 6px;
+  }
+  
+  .step-circle {
+    width: 34px;
+    height: 34px;
+    font-size: 0.85rem;
+  }
+  
+  .step-label {
+    font-size: 0.68rem;
+    max-width: 75px;
+  }
+  
+  .step-item {
+    min-width: 55px;
+  }
+}
+
+@media (max-width: 480px) {
+  .progress-stepper {
+    padding: 10px 5px;
+  }
+  
+  .step-line {
+    width: 28px;
+    margin: 0 3px;
+  }
+  
+  .step-circle {
+    width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+  }
+  
+  .check-icon {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .step-label {
+    font-size: 0.6rem;
+    max-width: 60px;
+    line-height: 1.2;
+  }
+  
+  .step-item {
+    min-width: 45px;
+    gap: 5px;
+  }
 }
 </style>
