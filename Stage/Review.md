@@ -33,3 +33,16 @@
 
 ## What went well
 - Overall design is decent
+
+
+## Sprint Review #3
+
+**Date**: February 18 2026  
+**Reviewer**: Internship supervisor
+
+## Current feedback
+- Clean design. Make sure that css goes last when making any html site.
+- Work on the translation of the form now.
+
+## What went well
+- Overall design
