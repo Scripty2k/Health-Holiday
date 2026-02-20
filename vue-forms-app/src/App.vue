@@ -1,8 +1,8 @@
 <template>
   <div id="booking">
     <header class="app-header">
-      <h1>Bijna op Health Holiday</h1>
-      <p>Vul je gegevens in om je je boeking compleet te maken.</p>
+      <h1>{{ $t('header.title') }}</h1>
+      <p>{{ $t('header.subtitle') }}</p>
     </header>
 
     <ProgressStepper 
@@ -52,25 +52,29 @@
 
 <!-- Hier even meer dingen toevoegen als ik meer forms heb -->
 <script setup>
-import { ref, reactive, watch } from 'vue'
+import { ref, reactive, watch, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import { useI18n } from 'vue-i18n'
 import ContactForm from './components/ContactForm.vue'
 import ExtrasForm from './components/ExtrasForm.vue'
 import Lifestyle from './components/Lifestyle.vue'
 import FinalForm from './components/FinalForm.vue'
 import ProgressStepper from './components/ProgressStepper.vue'
 
-const currentStep = ref(1)
 
-const stepLabels = [
-  'Persoonsgegevens',
-  'Extra bij het boeken',
-  'Leefstijlcheck',
-  'Bevestiging'
-]
+const { t } = useI18n()
+const currentStep = ref(1)
+const isDirty = ref(false)
+
+// Dynamic step labels that switch languages automatically
+const stepLabels = computed(() => [
+  t('stepper.step1'),
+  t('stepper.step2'),
+  t('stepper.step3'),
+  t('stepper.step4')
+])
 
 // Centralized form data storage
 const formData = reactive({
-  // Main person details (person making the booking)
   mainPerson: {
     gender: '',
     firstname: '',
@@ -85,7 +89,6 @@ const formData = reactive({
     email: '',
     alsoParticipant: false
   },
-  // Array of participants
   participants: [
     {
       id: 1,
@@ -116,7 +119,6 @@ const formData = reactive({
       email: ''
     }
   ],
-  // Extras/add-ons
   extras: {
     luggageOutbound: [],
     luggageReturn: [],
@@ -130,7 +132,6 @@ const formData = reactive({
       parking: false
     }
   },
-  // Lifestyle data
   lifestyle: []
 })
 
@@ -158,20 +159,18 @@ const initializeLifestyleData = () => {
   }))
 }
 
+// Initial setup
 initializeExtrasArrays()
 initializeLifestyleData()
 
-// Update main person data
 const updateMainPerson = (updates) => {
   Object.assign(formData.mainPerson, updates)
 }
 
-// Update specific participant
 const updateParticipant = (index, updates) => {
   Object.assign(formData.participants[index], updates)
 }
 
-// Add new participant
 const addParticipant = () => {
   const newId = formData.participants.length > 0 
     ? Math.max(...formData.participants.map(p => p.id)) + 1 
@@ -192,89 +191,83 @@ const addParticipant = () => {
     email: ''
   })
   
-  // Add default extras for new participant
   formData.extras.luggageOutbound.push('none')
   formData.extras.luggageReturn.push('none')
   formData.extras.travelInsurance.push('none')
   
-  // Add default lifestyle data for new participant
   formData.lifestyle.push({
-    height: '',
-    weight: '',
-    alcohol: '',
-    glassesPerDay: '',
-    smoking: '',
-    coffeeTea: '',
-    fitnessLevel: null,
-    medication: '',
-    physicalComplaints: '',
-    mentalComplaints: ''
+    height: '', weight: '', alcohol: '', glassesPerDay: '',
+    smoking: '', coffeeTea: '', fitnessLevel: null,
+    medication: '', physicalComplaints: '', mentalComplaints: ''
   })
 }
 
-// Remove participant
 const removeParticipant = (index) => {
   if (formData.participants.length > 1) {
     formData.participants.splice(index, 1)
-    // Remove extras for removed participant
     formData.extras.luggageOutbound.splice(index, 1)
     formData.extras.luggageReturn.splice(index, 1)
     formData.extras.travelInsurance.splice(index, 1)
-    // Remove lifestyle data for removed participant
     formData.lifestyle.splice(index, 1)
   }
 }
 
-// Update extras
 const updateExtras = (update) => {
   if (update.category === 'stayExtras') {
     formData.extras.stayExtras[update.type] = update.value
   } else if (update.index !== undefined) {
-    // Array-based extras (per participant)
     formData.extras[update.category][update.index] = update.value
   } else {
-    // Single value extras
     formData.extras[update.category] = update.value
   }
 }
 
-// Update lifestyle data
 const updateLifestyle = (update) => {
   if (!formData.lifestyle[update.index]) {
     formData.lifestyle[update.index] = {}
   }
   formData.lifestyle[update.index][update.field] = update.value
-}
-
-// Watch for form data changes and log them
-watch(formData, (newData) => {
-  console.log('Form data updated:', newData)
-}, { deep: false })
-
-// go to next step
-const goToNextStep = () => {
-  if (currentStep.value < stepLabels.length) {
-    currentStep.value++
+  // If alcohol was turned off, clear glassesPerDay so old values don't persist
+  if (update.field === 'alcohol' && update.value === 'no') {
+    formData.lifestyle[update.index].glassesPerDay = ''
   }
 }
 
-// go to previous step
+// Track unsaved changes (used to warn on refresh/navigation)
+watch(formData, (newData) => {
+  isDirty.value = true
+  console.log('Form is now "dirty"')
+}, { deep: true })
+
+// Navigation
+const goToNextStep = async () => {
+  if (currentStep.value < stepLabels.value.length) {
+    currentStep.value++
+    
+    // Wait for Vue to render the new step's DOM
+    await nextTick()
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+}
+
 const goToPreviousStep = () => {
   if (currentStep.value > 1) {
     currentStep.value--
   }
 }
 
-// go to specific step (only if it's the current step or a completed step)
 const goToStep = (stepNumber) => {
   if (stepNumber <= currentStep.value) {
     currentStep.value = stepNumber
+    isDirty.value = true
+    console.log('Form is now "dirty" - refresh warning is active')
   }
 }
 </script>
 
 <style>
-/* * {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -305,10 +298,9 @@ input, select, textarea, button {
 }
 
 .app-header {
-  background: #F5E5D3;
+  background: #FAF4E5;
   padding: 3rem 2rem;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .app-header h1 {
@@ -358,5 +350,5 @@ input, select, textarea, button {
   .main-content {
     padding: 1rem;
   }
-} */
+}
 </style>

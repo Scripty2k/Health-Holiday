@@ -1,7 +1,7 @@
 <template>
   <div class="section-card">
     <div class="section-header">
-      <h3>Gegevens deelnemer {{ participantNumber }}</h3>
+      <h3>{{ $t('participantForm.participant') }} {{ participantNumber }}</h3>
     </div>
     
     <div class="form-group">
@@ -20,16 +20,16 @@
               :checked="participant.gender === 'man'"
               @change="updateField('gender', 'man')"
             />
-            <span>Man</span>
+            <span>{{ $t('contactForm.man') }}</span>
           </label>
           <label class="radio-label">
             <input 
               type="radio" 
-              :value="'vrouw'" 
-              :checked="participant.gender === 'vrouw'"
-              @change="updateField('gender', 'vrouw')"
+              :value="'woman'" 
+              :checked="participant.gender === 'woman'"
+              @change="updateField('gender', 'woman')"
             />
-            <span>Vrouw</span>
+            <span>{{ $t('contactForm.woman') }}</span>
           </label>
         </div>
       </Field>
@@ -37,7 +37,7 @@
     </div>
 
     <div class="form-group">
-      <label :for="'firstname-' + participantNumber">Alle namen (volgens reisdocument)</label>
+      <label :for="'firstname-' + participantNumber">{{ $t('participantForm.allFirstNames') }}</label>
       <Field
         :name="'participant-firstname-' + participantNumber"
         :modelValue="participant.firstname"
@@ -49,7 +49,7 @@
           v-bind="field"
           :id="'firstname-' + participantNumber"
           type="text"
-          placeholder="Alle namen (volgens reisdocument)"
+          :placeholder="$t('participantForm.allFirstNamesPlaceholder')"
           :class="{ 'error': errors.length > 0 }"
         />
       </Field>
@@ -57,7 +57,7 @@
     </div>
 
     <div class="form-group">
-      <label :for="'lastname-' + participantNumber">Achternaam (volgens paspoort)</label>
+      <label :for="'lastname-' + participantNumber">{{ $t('participantForm.lastNamePassport') }}</label>
       <Field
         :name="'participant-lastname-' + participantNumber"
         :modelValue="participant.lastname"
@@ -69,7 +69,7 @@
           v-bind="field"
           :id="'lastname-' + participantNumber"
           type="text"
-          placeholder="Achternaam (volgens paspoort)"
+          :placeholder="$t('participantForm.lastNamePlaceholder')"
           :class="{ 'error': errors.length > 0 }"
         />
       </Field>
@@ -77,7 +77,7 @@
     </div>
 
     <div class="form-group">
-      <label :for="'birthdate-' + participantNumber">Geboortedatum</label>
+      <label :for="'birthdate-' + participantNumber">{{ $t('contactForm.birthdate') }}</label>
       <Field
         :name="'participant-birthdate-' + participantNumber"
         :modelValue="participant.birthdate"
@@ -89,7 +89,7 @@
           v-bind="field"
           :id="'birthdate-' + participantNumber"
           type="text"
-          placeholder="DD-MM-JJJJ"
+          :placeholder="$t('contactForm.birthdatePlaceholder')"
           :class="{ 'error': errors.length > 0 }"
         />
       </Field>
@@ -97,38 +97,38 @@
     </div>
 
     <div class="form-group">
-      <label :for="'nationality-' + participantNumber">Nationaliteit</label>
+      <label :for="'nationality-' + participantNumber">{{ $t('contactForm.nationality') }}</label>
       <select 
         :id="'nationality-' + participantNumber" 
         :value="participant.nationality"
         @change="updateField('nationality', $event.target.value)"
       >
-        <option value="dutch">Nederlands</option>
-        <option value="belgian">Belgisch</option>
-        <option value="german">Duits</option>
-        <option value="french">Frans</option>
-        <option value="other">Anders</option>
+        <option value="dutch">{{ $t('contactForm.nederlands') }}</option>
+        <option value="belgian">{{ $t('contactForm.belgian') }}</option>
+        <option value="german">{{ $t('contactForm.german') }}</option>
+        <option value="french">{{ $t('contactForm.french') }}</option>
+        <option value="other">{{ $t('contactForm.other') }}</option>
       </select>
     </div>
 
     <div class="form-group">
-      <label :for="'country-' + participantNumber">Land</label>
+      <label :for="'country-' + participantNumber">{{ $t('contactForm.country') }}</label>
       <select 
         :id="'country-' + participantNumber"
         :value="participant.country"
         @change="updateField('country', $event.target.value)"
       >
-        <option value="netherlands">Nederland</option>
-        <option value="belgium">België</option>
-        <option value="germany">Duitsland</option>
-        <option value="france">Frankrijk</option>
-        <option value="other">Anders</option>
+        <option value="netherlands">{{ $t('contactForm.netherlands') }}</option>
+        <option value="belgium">{{ $t('contactForm.belgium') }}</option>
+        <option value="germany">{{ $t('contactForm.germany') }}</option>
+        <option value="france">{{ $t('contactForm.france') }}</option>
+        <option value="other">{{ $t('contactForm.other') }}</option>
       </select>
     </div>
 
     <div class="address-row">
       <div class="form-group">
-        <label :for="'postcode-' + participantNumber">Postcode</label>
+        <label :for="'postcode-' + participantNumber">{{ $t('contactForm.postcode') }}</label>
         <Field
           :name="'participant-postcode-' + participantNumber"
           :modelValue="participant.postcode"
@@ -140,14 +140,14 @@
             v-bind="field"
             :id="'postcode-' + participantNumber"
             type="text"
-            placeholder="1111"
+            :placeholder="$t('contactForm.postcodePlaceholder')"
             :class="{ 'error': errors.length > 0 }"
           />
         </Field>
         <ErrorMessage :name="'participant-postcode-' + participantNumber" class="error-message" />
       </div>
       <div class="form-group">
-        <label :for="'housenumber-' + participantNumber">Huisnummer</label>
+        <label :for="'housenumber-' + participantNumber">{{ $t('contactForm.houseNumber') }}</label>
         <Field
           :name="'participant-housenumber-' + participantNumber"
           :modelValue="participant.housenumber"
@@ -159,31 +159,31 @@
             v-bind="field"
             :id="'housenumber-' + participantNumber"
             type="text"
-            placeholder="12"
+            :placeholder="$t('contactForm.houseNumberPlaceholder')"
             :class="{ 'error': errors.length > 0 }"
           />
         </Field>
         <ErrorMessage :name="'participant-housenumber-' + participantNumber" class="error-message" />
       </div>
       <div class="form-group">
-        <label :for="'addition-' + participantNumber">Toevoeging <span class="optional">(optioneel)</span></label>
+        <label :for="'addition-' + participantNumber">{{ $t('contactForm.addition') }} <span class="optional">{{ $t('contactForm.optional') }}</span></label>
         <input
           :id="'addition-' + participantNumber"
           :value="participant.addition"
           @input="updateField('addition', $event.target.value)"
           type="text"
-          placeholder="B"
+          :placeholder="$t('contactForm.additionPlaceholder')"
         />
       </div>
     </div>
 
-    <div class="form-group">
-      <label>Straat, Plaats</label>
-      <div class="info-text">Will be auto-filled based on postal code</div>
-    </div>
+    <!-- <div class="form-group">
+      <label>Straat en plaats</label>
+      <div class="info-text">Wordt automatisch ingevuld</div>
+    </div> -->
 
     <div class="form-group">
-      <label :for="'phone-' + participantNumber">Telefoon</label>
+      <label :for="'phone-' + participantNumber">{{ $t('contactForm.phone') }}</label>
       <Field
         :name="'participant-phone-' + participantNumber"
         :modelValue="participant.phone"
@@ -195,7 +195,7 @@
           v-bind="field"
           :id="'phone-' + participantNumber"
           type="tel"
-          placeholder="Telefoonnummer"
+          :placeholder="$t('contactForm.phonePlaceholder')"
           :class="{ 'error': errors.length > 0 }"
         />
       </Field>
@@ -203,7 +203,7 @@
     </div>
 
     <div class="form-group">
-      <label :for="'email-' + participantNumber">E-mailadres</label>
+      <label :for="'email-' + participantNumber">{{ $t('contactForm.email') }}</label>
       <Field
         :name="'participant-email-' + participantNumber"
         :modelValue="participant.email"
@@ -215,7 +215,7 @@
           v-bind="field"
           :id="'email-' + participantNumber"
           type="email"
-          placeholder="E-mailadres"
+          :placeholder="$t('contactForm.emailPlaceholder')"
           :class="{ 'error': errors.length > 0 }"
         />
       </Field>
@@ -273,62 +273,62 @@ const isValidDate = (dateString) => {
 // VeeValidate validation functions
 const validateGender = (value) => {
   if (!value || !value.trim()) {
-    return 'Kies je geslacht'
+    return 'Selecteer een geslacht'
   }
   return true
 }
 
 const validateFirstname = (value) => {
   if (!value || !value.trim()) {
-    return 'Vul je voornaam in'
+    return 'Vul alle voornamen in'
   }
   return true
 }
 
 const validateLastname = (value) => {
   if (!value || !value.trim()) {
-    return 'Vul je achternaam in'
+    return 'Vul achternaam in'
   }
   return true
 }
 
 const validateBirthdate = (value) => {
   if (!value || !value.trim()) {
-    return 'Vul je geboortedatum in (DD-MM-JJJJ)'
+    return 'Vul geboortedatum in'
   }
   if (!isValidDate(value)) {
-    return 'Vul je correcte geboortedatum in (DD-MM-JJJJ)'
+    return 'Ongeldige datum'
   }
   return true
 }
 
 const validatePostcode = (value) => {
   if (!value || !value.trim()) {
-    return 'Vul je postcode in'
+    return 'Vul postcode in'
   }
   return true
 }
 
 const validateHousenumber = (value) => {
   if (!value || !value.trim()) {
-    return 'Vul je huisnummer in'
+    return 'Vul huisnummer in'
   }
   return true
 }
 
 const validatePhone = (value) => {
   if (!value || !value.trim()) {
-    return 'Vul je telefoonnummer in'
+    return 'Vul telefoonnummer in'
   }
   return true
 }
 
 const validateEmail = (value) => {
   if (!value || !value.trim()) {
-    return 'Vul je e-mailadres in'
+    return 'Vul e-mailadres in'
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-    return 'Vul een geldig e-mailadres in'
+    return 'Ongeldig e-mailadres'
   }
   return true
 }

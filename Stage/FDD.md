@@ -98,10 +98,10 @@ Confirmation Page
 - Error rate < 5%
 - Mobile responsiveness on all devices
 - Cross-browser compatibility (Chrome, Safari, Firefox, Edge)
+- Multi-language support (initial version)
 
 ### 9. Out of Scope
 - User account creation
 - Payment processing
 - Direct booking integration
-- Multi-language support (initial version)
 - PDF generation of submitted forms

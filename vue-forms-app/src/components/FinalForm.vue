@@ -1,107 +1,136 @@
 <template>
   <div class="form-container">
     <div class="header">
-      <h2>Bevestiging</h2>
-      <p class="subtitle">Controleer je gegevens voordat je de boeking voltooit.</p>
+      <h2>{{ $t('FinalForm.mainTitle') }}</h2>
+      <p class="subtitle">{{ $t('FinalForm.subtitle') }}</p>
     </div>
     
     <div class="summary-section">
+
       <!-- Main Person Summary -->
       <div class="section-card">
-        <h3>Mijn gegevens</h3>
+        <h3>{{ $t('FinalForm.personalDetails') }}</h3>
         <div class="data-grid">
+        <div class="data-item">
+          <span class="label">{{ $t('FinalForm.gender') }}:</span>
+          <span class="value">{{ formData.mainPerson.gender ? $t(`contactForm.${formData.mainPerson.gender === 'vrouw' ? 'woman' : formData.mainPerson.gender}`) : '-' }}</span>
+        </div>
+        <div class="data-item">
+          <span class="label">{{ $t('FinalForm.name') }}:</span>
+          <span class="value">{{ formData.mainPerson.firstname }} {{ formData.mainPerson.lastname }}</span>
+        </div>
           <div class="data-item">
-            <span class="label">Geslacht:</span>
-            <span class="value">{{ formData.mainPerson.gender || '-' }}</span>
-          </div>
-          <div class="data-item">
-            <span class="label">Naam:</span>
-            <span class="value">{{ formData.mainPerson.firstname }} {{ formData.mainPerson.lastname }}</span>
-          </div>
-          <div class="data-item">
-            <span class="label">Geboortedatum:</span>
+            <span class="label">{{ $t('FinalForm.birthdate') }}:</span>
             <span class="value">{{ formData.mainPerson.birthdate || '-' }}</span>
           </div>
           <div class="data-item">
-            <span class="label">Nationaliteit:</span>
-            <span class="value">{{ formData.mainPerson.nationality }}</span>
+            <span class="label">{{ $t('FinalForm.nationality') }}:</span>
+            <span class="value">{{ $t(`contactForm.${formData.mainPerson.nationality}`) }}</span>
           </div>
           <div class="data-item">
-            <span class="label">Land:</span>
-            <span class="value">{{ formData.mainPerson.country }}</span>
+            <span class="label">{{ $t('FinalForm.country') }}:</span>
+            <span class="value">{{ $t(`contactForm.${formData.mainPerson.country}`) }}</span>
           </div>
           <div class="data-item">
-            <span class="label">Adres:</span>
-            <span class="value">
-              {{ formData.mainPerson.postcode }} 
-              {{ formData.mainPerson.housenumber }}{{ formData.mainPerson.addition }}
+            <span class="label">{{ $t('FinalForm.address') }}:</span>
+            <span class="value vertical-stack">
+              <div>{{ formData.mainPerson.postcode }}</div>
+              <div>{{ formData.mainPerson.housenumber }}{{ formData.mainPerson.addition }}</div>
             </span>
           </div>
           <div class="data-item">
-            <span class="label">Telefoon:</span>
+            <span class="label">{{ $t('FinalForm.phone') }}:</span>
             <span class="value">{{ formData.mainPerson.phone || '-' }}</span>
           </div>
           <div class="data-item">
-            <span class="label">E-mail:</span>
+            <span class="label">{{ $t('FinalForm.email') }}:</span>
             <span class="value">{{ formData.mainPerson.email }}</span>
           </div>
           <div class="data-item">
-            <span class="label">Ook deelnemer:</span>
-            <span class="value">{{ formData.mainPerson.alsoParticipant ? 'Ja' : 'Nee' }}</span>
+            <span class="label">{{ $t('FinalForm.participant') }}:</span>
+            <span class="value">{{ formData.mainPerson.alsoParticipant ? $t('general.yes') : $t('general.no') }}</span>
           </div>
         </div>
       </div>
 
       <!-- Participants Summary -->
       <div v-for="(participant, index) in formData.participants" :key="participant.id" class="section-card">
-        <h3>Deelnemer {{ index + 1 }}</h3>
+        <h3>{{ $t('FinalForm.participant') }} {{ index + 1 }}</h3>
         <div class="data-grid">
           <div class="data-item">
-            <span class="label">Geslacht:</span>
-            <span class="value">{{ participant.gender || '-' }}</span>
+            <span class="label">{{ $t('FinalForm.gender') }}:</span>
+            <span class="value">{{ participant.gender ? $t(`contactForm.${participant.gender === 'vrouw' ? 'woman' : participant.gender}`) : '-' }}</span>
           </div>
           <div class="data-item">
-            <span class="label">Naam:</span>
+            <span class="label">{{ $t('FinalForm.name') }}:</span>
             <span class="value">{{ participant.firstname }} {{ participant.lastname }}</span>
           </div>
           <div class="data-item">
-            <span class="label">Geboortedatum:</span>
+            <span class="label">{{ $t('FinalForm.birthdate') }}:</span>
             <span class="value">{{ participant.birthdate || '-' }}</span>
           </div>
           <div class="data-item">
-            <span class="label">Nationaliteit:</span>
-            <span class="value">{{ participant.nationality }}</span>
+            <span class="label">{{ $t('FinalForm.nationality') }}:</span>
+            <span class="value">{{ $t(`contactForm.${participant.nationality}`) }}</span>
           </div>
           <div class="data-item">
-            <span class="label">Land:</span>
-            <span class="value">{{ participant.country }}</span>
+            <span class="label">{{ $t('FinalForm.country') }}:</span>
+            <span class="value">{{ $t(`contactForm.${participant.country}`) }}</span>
           </div>
           <div class="data-item">
-            <span class="label">Adres:</span>
-            <span class="value">
-              {{ participant.postcode }} 
-              {{ participant.housenumber }}{{ participant.addition }}
+            <span class="label">{{ $t('FinalForm.address') }}:</span>
+            <span class="value vertical-stack">
+              <div>{{ participant.postcode }}</div>
+              <div>{{ participant.housenumber }}{{ participant.addition }}</div>
             </span>
           </div>
           <div class="data-item">
-            <span class="label">Telefoon:</span>
+            <span class="label">{{ $t('FinalForm.phone') }}:</span>
             <span class="value">{{ participant.phone || '-' }}</span>
           </div>
           <div class="data-item">
-            <span class="label">E-mail:</span>
+            <span class="label">{{ $t('FinalForm.email') }}:</span>
             <span class="value">{{ participant.email || '-' }}</span>
           </div>
         </div>
       </div>
 
+      <!-- Special Request Summary
+      <div v-if="formData.specialRequest || specialRequest" class="section-card">
+        <h3>Samenvatting speciale verzoeken</h3>
+        <div class="data-grid">
+          <div class="data-item">
+            <span class="label">Vraag/opmerking:</span>
+            <span class="value">{{ formData.specialRequest || specialRequest || '-' }}</span>
+          </div>
+        </div>
+      </div> -->
+
+            <div class="section-card">
+        <h3>{{ $t('FinalForm.specialRequests') }}</h3>
+        <div class="data-grid">
+          <div class="data-item" style="grid-template-columns: 1fr;">
+            <label for="specialRequest" class="label">{{ $t('FinalForm.question') }}</label>
+            <textarea
+              id="specialRequest"
+              v-model="specialRequest"
+              :placeholder="$t('FinalForm.placeholder')"
+              rows="4"
+              style="width: 100%; margin-top: 0.5rem; border-radius: 8px; border: 1px solid #ccc; padding: 0.75rem; font-size: 1rem;"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+
       <button @click="handleFinish" class="finish-btn">
-        Boeking Voltooien
+        {{ $t('FinalForm.finish') }}
       </button>
     </div>
   </div>
 </template>
 
 <script setup>
+import { ref, watch } from 'vue'
 const props = defineProps({
   formData: {
     type: Object,
@@ -109,7 +138,14 @@ const props = defineProps({
   }
 })
 
-// this is where the stuff will be logged in the console.
+// Special request state
+const specialRequest = ref(props.formData.specialRequest || '')
+
+// Keep formData.specialRequest in sync if user edits
+watch(specialRequest, (val) => {
+  props.formData.specialRequest = val
+})
+
 const handleFinish = () => {
   console.log('=== FINAL BOOKING DATA ===')
   console.log('Main Person:', props.formData.mainPerson)
@@ -117,6 +153,7 @@ const handleFinish = () => {
   console.log('Total Participants:', props.formData.participants.length)
   console.log('Extras:', props.formData.extras)
   console.log('Lifestyle:', props.formData.lifestyle)
+  console.log('Special Request:', props.formData.specialRequest)
   alert('Check de console!')
 }
 </script>
@@ -182,6 +219,12 @@ h3 {
 .data-grid {
   display: grid;
   gap: 1rem;
+}
+
+.vertical-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2px; /* Slight space between the postal code and house number */
 }
 
 .data-item {

@@ -1,21 +1,21 @@
 <template>
   <div class="lifestyle-container">
     <div class="lifestyle-wrapper">
-      <h1 class="main-title">Leefstijlcheck</h1>
-      <p class="subtitle">Hieronder vind je een aantal medische en persoonlijke vragen over jezelf.</p>
-      <p class="skip-notice">
-        <span class="skip-link" @click="handleSkip">Dit kan ook later</span>
-      </p>
+    <h1 class="main-title">{{ $t('lifestyleForm.mainTitle') }}</h1>
+    <p class="subtitle">{{ $t('lifestyleForm.subtitle') }}</p>
+    <p class="skip-notice">
+      <span class="skip-link" @click="handleSkip">{{ $t('lifestyleForm.skip') }}</span>
+    </p>
 
       <form @submit.prevent="handleSubmit" class="lifestyle-form" novalidate>
         
         <div v-for="(participant, index) in participants" :key="participant.id" class="participant-section">
-          <h2 class="participant-title">Deelnemer {{ index + 1 }}</h2>
+          <h2 class="participant-title">{{ $t('participantForm.participant') }} {{ index + 1 }}</h2>
           
           <div class="form-grid">
             <!-- Height -->
             <div class="form-group">
-              <label :for="'height-' + index">Wat is je lengte?</label>
+              <label :for="'height-' + index">{{ $t('lifestyleForm.height') }}</label>
               <div class="input-with-unit">
                 <input 
                   :id="'height-' + index"
@@ -26,7 +26,7 @@
                   placeholder=""
                   :class="{ 'error': fieldErrors[index]?.height }"
                 />
-                <span class="unit">cm</span>
+                <span class="unit">{{ $t('lifestyleForm.unitCm') }}</span>
               </div>
               <span v-if="fieldErrors[index]?.height" class="error-message">{{ fieldErrors[index].height }}</span>
             </div>
@@ -34,8 +34,7 @@
             <!-- Weight -->
             <div class="form-group">
               <label :for="'weight-' + index">
-                Wat is je gewicht?
-                <span class="hint">(gebruik een schatting; exacte cijfers zijn niet nodig)</span>
+                {{ $t('lifestyleForm.weight') }}
               </label>
               <div class="input-with-unit">
                 <input 
@@ -47,14 +46,14 @@
                   placeholder=""
                   :class="{ 'error': fieldErrors[index]?.weight }"
                 />
-                <span class="unit">kg</span>
+                <span class="unit">{{ $t('lifestyleForm.unitKg') }}</span>
               </div>
               <span v-if="fieldErrors[index]?.weight" class="error-message">{{ fieldErrors[index].weight }}</span>
             </div>
 
             <!-- Alcohol -->
             <div class="form-group">
-              <label>Drink je alcohol?</label>
+              <label>{{ $t('lifestyleForm.alcoholQuestion') }}</label>
               <div class="radio-group">
                 <label class="radio-option">
                   <input 
@@ -64,7 +63,7 @@
                     :checked="lifestyleData[index]?.alcohol === 'yes'"
                     @change="updateLifestyle(index, 'alcohol', 'yes'); validateField(index, 'alcohol')"
                   />
-                  <span>Ja</span>
+                  <span>{{ $t('lifestyleForm.yes') }}</span>
                 </label>
                 <label class="radio-option">
                   <input 
@@ -74,7 +73,7 @@
                     :checked="lifestyleData[index]?.alcohol === 'no'"
                     @change="updateLifestyle(index, 'alcohol', 'no'); validateField(index, 'alcohol')"
                   />
-                  <span>Nee</span>
+                  <span>{{ $t('lifestyleForm.no') }}</span>
                 </label>
               </div>
               <span v-if="fieldErrors[index]?.alcohol" class="error-message">{{ fieldErrors[index].alcohol }}</span>
@@ -82,7 +81,7 @@
 
             <!-- Glasses per day -->
             <div class="form-group" v-if="lifestyleData[index]?.alcohol === 'yes'">
-              <label :for="'glasses-' + index">Hoeveel glazen per dag?</label>
+              <label :for="'glasses-' + index">{{ $t('lifestyleForm.glassesPerDay') }}</label>
               <div class="input-with-unit">
                 <input 
                   :id="'glasses-' + index"
@@ -93,14 +92,14 @@
                   placeholder=""
                   :class="{ 'error': fieldErrors[index]?.glassesPerDay }"
                 />
-                <span class="unit">glazen</span>
+                <span class="unit">{{ $t('lifestyleForm.unitGlasses') }}</span>
               </div>
               <span v-if="fieldErrors[index]?.glassesPerDay" class="error-message">{{ fieldErrors[index].glassesPerDay }}</span>
             </div>
 
             <!-- Smoking -->
             <div class="form-group">
-              <label>Rook je?</label>
+              <label>{{ $t('lifestyleForm.smokingQuestion') }}</label>
               <div class="radio-group">
                 <label class="radio-option">
                   <input 
@@ -110,7 +109,7 @@
                     :checked="lifestyleData[index]?.smoking === 'yes'"
                     @change="updateLifestyle(index, 'smoking', 'yes'); validateField(index, 'smoking')"
                   />
-                  <span>Ja</span>
+                  <span>{{ $t('lifestyleForm.yes') }}</span>
                 </label>
                 <label class="radio-option">
                   <input 
@@ -120,7 +119,7 @@
                     :checked="lifestyleData[index]?.smoking === 'no'"
                     @change="updateLifestyle(index, 'smoking', 'no'); validateField(index, 'smoking')"
                   />
-                  <span>Nee</span>
+                  <span>{{ $t('lifestyleForm.no') }}</span>
                 </label>
               </div>
               <span v-if="fieldErrors[index]?.smoking" class="error-message">{{ fieldErrors[index].smoking }}</span>
@@ -128,7 +127,7 @@
 
             <!-- Coffee/Tea -->
             <div class="form-group">
-              <label>Drink je koffie/thee?</label>
+              <label>{{ $t('lifestyleForm.coffeeTeaQuestion') }}</label>
               <div class="radio-group">
                 <label class="radio-option">
                   <input 
@@ -138,7 +137,7 @@
                     :checked="lifestyleData[index]?.coffeeTea === 'yes'"
                     @change="updateLifestyle(index, 'coffeeTea', 'yes'); validateField(index, 'coffeeTea')"
                   />
-                  <span>Ja</span>
+                  <span>{{ $t('lifestyleForm.yes') }}</span>
                 </label>
                 <label class="radio-option">
                   <input 
@@ -148,14 +147,14 @@
                     :checked="lifestyleData[index]?.coffeeTea === 'no'"
                     @change="updateLifestyle(index, 'coffeeTea', 'no'); validateField(index, 'coffeeTea')"
                   />
-                  <span>Nee</span>
+                  <span>{{ $t('lifestyleForm.no') }}</span>
                 </label>
               </div>
             </div>
 
             <!-- Fitness level -->
             <div class="form-group full-width">
-              <label>Hoe is je conditie op een schaal van 1 op 5, waarbij 5 de beste conditie is.</label>
+              <label>{{ $t('lifestyleForm.fitnessLevel') }}</label>
               <div class="fitness-scale">
                 <button 
                   v-for="n in 5" 
@@ -173,7 +172,7 @@
 
             <!-- Medication -->
             <div class="form-group">
-              <label>Gebruik je medicijnen?</label>
+              <label>{{ $t('lifestyleForm.medicationQuestion') }}</label>
               <div class="radio-group">
                 <label class="radio-option">
                   <input 
@@ -183,7 +182,7 @@
                     :checked="lifestyleData[index]?.medication === 'yes'"
                     @change="updateLifestyle(index, 'medication', 'yes'); validateField(index, 'medication')"
                   />
-                  <span>Ja</span>
+                  <span>{{ $t('lifestyleForm.yes') }}</span>
                 </label>
                 <label class="radio-option">
                   <input 
@@ -193,7 +192,7 @@
                     :checked="lifestyleData[index]?.medication === 'no'"
                     @change="updateLifestyle(index, 'medication', 'no'); validateField(index, 'medication')"
                   />
-                  <span>Nee</span>
+                  <span>{{ $t('lifestyleForm.no') }}</span>
                 </label>
               </div>
               <span v-if="fieldErrors[index]?.medication" class="error-message">{{ fieldErrors[index].medication }}</span>
@@ -201,7 +200,7 @@
 
             <!-- Physical complaints -->
             <div class="form-group">
-              <label>Heb je lichamelijke klachten?</label>
+              <label>{{ $t('lifestyleForm.physicalComplaints') }}</label>
               <div class="radio-group">
                 <label class="radio-option">
                   <input 
@@ -211,7 +210,7 @@
                     :checked="lifestyleData[index]?.physicalComplaints === 'yes'"
                     @change="updateLifestyle(index, 'physicalComplaints', 'yes'); validateField(index, 'physicalComplaints')"
                   />
-                  <span>Ja</span>
+                  <span>{{ $t('lifestyleForm.yes') }}</span>
                 </label>
                 <label class="radio-option">
                   <input 
@@ -221,7 +220,7 @@
                     :checked="lifestyleData[index]?.physicalComplaints === 'no'"
                     @change="updateLifestyle(index, 'physicalComplaints', 'no'); validateField(index, 'physicalComplaints')"
                   />
-                  <span>Nee</span>
+                  <span>{{ $t('lifestyleForm.no') }}</span>
                 </label>
               </div>
               <span v-if="fieldErrors[index]?.physicalComplaints" class="error-message">{{ fieldErrors[index].physicalComplaints }}</span>
@@ -229,7 +228,7 @@
 
             <!-- Mental complaints -->
             <div class="form-group">
-              <label>Heb je geestelijke klachten?</label>
+              <label>{{ $t('lifestyleForm.mentalComplaints') }}</label>
               <div class="radio-group">
                 <label class="radio-option">
                   <input 
@@ -239,7 +238,7 @@
                     :checked="lifestyleData[index]?.mentalComplaints === 'yes'"
                     @change="updateLifestyle(index, 'mentalComplaints', 'yes'); validateField(index, 'mentalComplaints')"
                   />
-                  <span>Ja</span>
+                  <span>{{ $t('lifestyleForm.yes') }}</span>
                 </label>
                 <label class="radio-option">
                   <input 
@@ -249,7 +248,7 @@
                     :checked="lifestyleData[index]?.mentalComplaints === 'no'"
                     @change="updateLifestyle(index, 'mentalComplaints', 'no'); validateField(index, 'mentalComplaints')"
                   />
-                  <span>Nee</span>
+                  <span>{{ $t('lifestyleForm.no') }}</span>
                 </label>
               </div>
               <span v-if="fieldErrors[index]?.mentalComplaints" class="error-message">{{ fieldErrors[index].mentalComplaints }}</span>
@@ -260,10 +259,10 @@
         <div class="form-actions">
           <button type="button" @click="handleBack" class="back-btn">
             <i class="fa-regular fa-arrow-left"></i>
-            Terug
+            {{ $t('lifestyleForm.back') }}
           </button>
           <button type="submit" class="submit-btn">
-            Volgende stap(4)
+            {{ $t('lifestyleForm.next') }}
           </button>
         </div>
       </form>
@@ -273,6 +272,7 @@
 
 <script setup>
 import { ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n' 
 
 const props = defineProps({
   participants: {
@@ -286,6 +286,8 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['next', 'back', 'update:lifestyle'])
+
+const { t } = useI18n()
 
 const fieldErrors = ref([])
 
@@ -303,61 +305,61 @@ const validateField = (index, field) => {
   
   if (field === 'height') {
     if (!data?.height) {
-      fieldErrors.value[index].height = 'Vul je lengte in'
+      fieldErrors.value[index].height = t('lifestyleForm.heightRequired')
     } else {
       fieldErrors.value[index].height = ''
     }
   } else if (field === 'weight') {
     if (!data?.weight) {
-      fieldErrors.value[index].weight = 'Vul je gewicht in'
+      fieldErrors.value[index].weight = t('lifestyleForm.weightRequired')
     } else {
       fieldErrors.value[index].weight = ''
     }
   } else if (field === 'alcohol') {
     if (!data?.alcohol) {
-      fieldErrors.value[index].alcohol = 'Selecteer een optie'
+      fieldErrors.value[index].alcohol = t('lifestyleForm.selectOption')
     } else {
       fieldErrors.value[index].alcohol = ''
     }
   } else if (field === 'glassesPerDay') {
     if (data?.alcohol === 'yes' && !data?.glassesPerDay) {
-      fieldErrors.value[index].glassesPerDay = 'Vul het aantal glazen in'
+      fieldErrors.value[index].glassesPerDay = t('lifestyleForm.glassesRequired')
     } else {
       fieldErrors.value[index].glassesPerDay = ''
     }
   } else if (field === 'smoking') {
     if (!data?.smoking) {
-      fieldErrors.value[index].smoking = 'Selecteer een optie'
+      fieldErrors.value[index].smoking = t('lifestyleForm.selectOption')
     } else {
       fieldErrors.value[index].smoking = ''
     }
   } else if (field === 'coffeeTea') {
     if (!data?.coffeeTea) {
-      fieldErrors.value[index].coffeeTea = 'Selecteer een optie'
+      fieldErrors.value[index].coffeeTea = t('lifestyleForm.selectOption')
     } else {
       fieldErrors.value[index].coffeeTea = ''
     }
   } else if (field === 'fitnessLevel') {
     if (!data?.fitnessLevel) {
-      fieldErrors.value[index].fitnessLevel = 'Selecteer je conditieniveau'
+      fieldErrors.value[index].fitnessLevel = t('lifestyleForm.fitnessRequired')
     } else {
       fieldErrors.value[index].fitnessLevel = ''
     }
   } else if (field === 'medication') {
     if (!data?.medication) {
-      fieldErrors.value[index].medication = 'Selecteer een optie'
+      fieldErrors.value[index].medication = t('lifestyleForm.selectOption')
     } else {
       fieldErrors.value[index].medication = ''
     }
   } else if (field === 'physicalComplaints') {
     if (!data?.physicalComplaints) {
-      fieldErrors.value[index].physicalComplaints = 'Selecteer een optie'
+      fieldErrors.value[index].physicalComplaints = t('lifestyleForm.selectOption')
     } else {
       fieldErrors.value[index].physicalComplaints = ''
     }
   } else if (field === 'mentalComplaints') {
     if (!data?.mentalComplaints) {
-      fieldErrors.value[index].mentalComplaints = 'Selecteer een optie'
+      fieldErrors.value[index].mentalComplaints = t('lifestyleForm.selectOption')
     } else {
       fieldErrors.value[index].mentalComplaints = ''
     }
@@ -374,43 +376,43 @@ const validateAllFields = () => {
     
     // Validate all required fields
     if (!data?.height) {
-      fieldErrors.value[index].height = 'Vul je lengte in'
+      fieldErrors.value[index].height = t('lifestyleForm.heightRequired')
       isValid = false
     }
     if (!data?.weight) {
-      fieldErrors.value[index].weight = 'Vul je gewicht in'
+      fieldErrors.value[index].weight = t('lifestyleForm.weightRequired')
       isValid = false
     }
     if (!data?.alcohol) {
-      fieldErrors.value[index].alcohol = 'Selecteer een optie'
+      fieldErrors.value[index].alcohol = t('lifestyleForm.selectOption')
       isValid = false
     }
     if (data?.alcohol === 'yes' && !data?.glassesPerDay) {
-      fieldErrors.value[index].glassesPerDay = 'Vul het aantal glazen in'
+      fieldErrors.value[index].glassesPerDay = t('lifestyleForm.glassesRequired')
       isValid = false
     }
     if (!data?.smoking) {
-      fieldErrors.value[index].smoking = 'Selecteer een optie'
+      fieldErrors.value[index].smoking = t('lifestyleForm.selectOption')
       isValid = false
     }
     if (!data?.coffeeTea) {
-      fieldErrors.value[index].coffeeTea = 'Selecteer een optie'
+      fieldErrors.value[index].coffeeTea = t('lifestyleForm.selectOption')
       isValid = false
     }
     if (!data?.fitnessLevel) {
-      fieldErrors.value[index].fitnessLevel = 'Selecteer je conditieniveau'
+      fieldErrors.value[index].fitnessLevel = t('lifestyleForm.fitnessRequired')
       isValid = false
     }
     if (!data?.medication) {
-      fieldErrors.value[index].medication = 'Selecteer een optie'
+      fieldErrors.value[index].medication = t('lifestyleForm.selectOption')
       isValid = false
     }
     if (!data?.physicalComplaints) {
-      fieldErrors.value[index].physicalComplaints = 'Selecteer een optie'
+      fieldErrors.value[index].physicalComplaints = t('lifestyleForm.selectOption')
       isValid = false
     }
     if (!data?.mentalComplaints) {
-      fieldErrors.value[index].mentalComplaints = 'Selecteer een optie'
+      fieldErrors.value[index].mentalComplaints = t('lifestyleForm.selectOption')
       isValid = false
     }
   })
@@ -431,7 +433,7 @@ const handleSubmit = () => {
     return
   }
   
-  console.log('Lifestyle data submitted:', props.lifestyleData)
+  // console.log('Lifestyle data submitted:', props.lifestyleData)
   emit('next')
 }
 

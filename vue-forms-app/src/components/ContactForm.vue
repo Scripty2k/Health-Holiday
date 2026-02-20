@@ -5,23 +5,22 @@
       <!-- Participants Summary -->
       <div class="participants-summary">
         <div class="summary-content">
-          <h2>Deelnemers</h2>
-          <p>Je gaat boeken voor <strong>{{ participants.length }} volwassenen</strong>.</p>
-        </div>
+          <h2>{{ $t('contactForm.participants') }}</h2>
+            <p v-html="$t('contactForm.bookingFor', { count: participants.length })"></p>        </div>
         <button type="button" @click="toggleParticipantManager" class="adjust-btn">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="edit-icon">
             <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M18.5 2.50023C18.8978 2.1024 19.4374 1.87891 20 1.87891C20.5626 1.87891 21.1022 2.1024 21.5 2.50023C21.8978 2.89805 22.1213 3.43762 22.1213 4.00023C22.1213 4.56284 21.8978 5.1024 21.5 5.50023L12 15.0002L8 16.0002L9 12.0002L18.5 2.50023Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          Aanpassen
+          {{ $t('contactForm.adjust') }}
         </button>
       </div>
 
       <Form @submit="handleSubmit" class="clean-form" v-slot="{ errors }">
         <!-- Main Person Section -->
         <div class="section-card">
-          <h3>Mijn gegevens</h3>
-          
+          <h3>{{ $t('contactForm.myDetails') }}</h3>
+
           <div class="form-group">
             <Field
               name="gender"
@@ -38,16 +37,16 @@
                     @change="updateMainPersonField('gender', 'man')"
                     value="man"
                   />
-                  <span>Man</span>
+                  <span>{{ $t('contactForm.man') }}</span>
                 </label>
                 <label class="radio-label">
                   <input 
                     type="radio" 
-                    :checked="mainPerson.gender === 'vrouw'"
-                    @change="updateMainPersonField('gender', 'vrouw')"
-                    value="vrouw"
+                    :checked="mainPerson.gender === 'woman'"
+                    @change="updateMainPersonField('gender', 'woman')"
+                    value="woman"
                   />
-                  <span>Vrouw</span>
+                  <span>{{ $t('contactForm.woman') }}</span>
                 </label>
               </div>
             </Field>
@@ -55,7 +54,7 @@
           </div>
 
           <div class="form-group">
-            <label for="firstname">Voornaam</label>
+            <label for="firstname">{{ $t('contactForm.firstName') }}</label>
             <Field
               name="firstname"
               :modelValue="mainPerson.firstname"
@@ -63,19 +62,19 @@
               :rules="validateFirstname"
               v-slot="{ field, errors }"
             >
-              <input
-                v-bind="field"
-                id="firstname"
-                type="text"
-                placeholder="Voornaam"
-                :class="{ 'error': errors.length > 0 }"
-              />
+            <input
+              v-bind="field"
+              id="firstname"
+              type="text"
+              :placeholder="$t('contactForm.firstNamePlaceholder')"
+              :class="{ 'error': errors.length > 0 }"
+            />
             </Field>
             <ErrorMessage name="firstname" class="error-message" />
           </div>
 
           <div class="form-group">
-            <label for="lastname">Achternaam</label>
+            <label for="lastname">{{ $t('contactForm.lastName') }}</label>
             <Field
               name="lastname"
               :modelValue="mainPerson.lastname"
@@ -87,7 +86,7 @@
                 v-bind="field"
                 id="lastname"
                 type="text"
-                placeholder="Achternaam"
+                :placeholder="$t('contactForm.lastNamePlaceholder')"
                 :class="{ 'error': errors.length > 0 }"
               />
             </Field>
@@ -95,7 +94,7 @@
           </div>
 
           <div class="form-group">
-            <label for="birthdate">Geboortedatum</label>
+            <label for="birthdate">{{ $t('contactForm.birthdate') }}</label>
             <Field
               name="birthdate"
               :modelValue="mainPerson.birthdate"
@@ -107,7 +106,7 @@
                 v-bind="field"
                 id="birthdate"
                 type="text"
-                placeholder="DD-MM-JJJJ"
+                :placeholder="$t('contactForm.birthdatePlaceholder')"
                 :class="{ 'error': errors.length > 0 }"
               />
             </Field>
@@ -115,38 +114,38 @@
           </div>
 
           <div class="form-group">
-            <label for="nationality">Nationaliteit</label>
+            <label for="nationality">{{ $t('contactForm.nationality') }}</label>
             <select 
               id="nationality" 
               :value="mainPerson.nationality"
               @change="updateMainPersonField('nationality', $event.target.value)"
             >
-              <option value="dutch">Nederlands</option>
-              <option value="belgian">Belgisch</option>
-              <option value="german">Duits</option>
-              <option value="french">Frans</option>
-              <option value="other">Anders</option>
+              <option value="dutch">{{ $t('contactForm.nederlands') }}</option>
+              <option value="belgian">{{ $t('contactForm.belgian') }}</option>
+              <option value="german">{{ $t('contactForm.german') }}</option>
+              <option value="french">{{ $t('contactForm.french') }}</option>
+              <option value="other">{{ $t('contactForm.other') }}</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label for="country">Land</label>
+            <label for="country">{{ $t('contactForm.country') }}</label>
             <select 
               id="country" 
               :value="mainPerson.country"
               @change="updateMainPersonField('country', $event.target.value)"
             >
-              <option value="netherlands">Nederland</option>
-              <option value="belgium">België</option>
-              <option value="germany">Duitsland</option>
-              <option value="france">Frankrijk</option>
-              <option value="other">Anders</option>
+              <option value="netherlands">{{ $t('contactForm.netherlands') }}</option>
+              <option value="belgium">{{ $t('contactForm.belgium') }}</option>
+              <option value="germany">{{ $t('contactForm.germany') }}</option>
+              <option value="france">{{ $t('contactForm.france') }}</option>
+              <option value="other">{{ $t('contactForm.other') }}</option>
             </select>
           </div>
 
           <div class="address-row">
             <div class="form-group">
-              <label for="postcode">Postcode</label>
+              <label for="postcode">{{ $t('contactForm.postcode') }}</label>
               <Field
                 name="postcode"
                 :modelValue="mainPerson.postcode"
@@ -158,14 +157,14 @@
                   v-bind="field"
                   id="postcode"
                   type="text"
-                  placeholder="1111"
+                  placeholder="1234 AB"
                   :class="{ 'error': errors.length > 0 }"
                 />
               </Field>
               <ErrorMessage name="postcode" class="error-message" />
             </div>
             <div class="form-group">
-              <label for="housenumber">Huisnummer</label>
+              <label for="housenumber">{{ $t('contactForm.houseNumber') }}</label>
               <Field
                 name="housenumber"
                 :modelValue="mainPerson.housenumber"
@@ -184,32 +183,19 @@
               <ErrorMessage name="housenumber" class="error-message" />
             </div>
             <div class="form-group">
-              <label for="addition">Toevoeging <span class="optional">(optioneel)</span></label>
+              <label for="addition">{{ $t('contactForm.addition') }} <span class="optional">(optioneel)</span></label>
               <input
                 id="addition"
                 :value="mainPerson.addition"
                 @input="updateMainPersonField('addition', $event.target.value)"
                 type="text"
-                placeholder="B"
+                placeholder="A"
               />
             </div>
           </div>
 
           <div class="form-group">
-            <label class="address-label">Straat, Plaats</label>
-            <div v-if="addressInfo" class="address-display">
-              {{ addressInfo }}
-            </div>
-            <div v-else-if="isLoadingAddress" class="address-loading">
-              Ophalen adres...
-            </div>
-            <div v-else class="address-placeholder">
-              Wordt automatisch ingevuld
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="phone">Telefoon</label>
+            <label for="phone">{{ $t('contactForm.phone') }}</label>
             <Field
               name="phone"
               :modelValue="mainPerson.phone"
@@ -221,7 +207,7 @@
                 v-bind="field"
                 id="phone"
                 type="tel"
-                placeholder="Telefoonnummer"
+                placeholder="06 12345678"
                 :class="{ 'error': errors.length > 0 }"
               />
             </Field>
@@ -229,7 +215,7 @@
           </div>
 
           <div class="form-group">
-            <label for="email">E-mailadres</label>
+            <label for="email">{{ $t('contactForm.email') }}</label>
             <Field
               name="email"
               :modelValue="mainPerson.email"
@@ -241,7 +227,7 @@
                 v-bind="field"
                 id="email"
                 type="email"
-                placeholder="E-mailadres"
+                :placeholder="$t('contactForm.emailPlaceholder')"
                 :class="{ 'error': errors.length > 0 }"
               />
             </Field>
@@ -255,7 +241,7 @@
                 :checked="mainPerson.alsoParticipant"
                 @change="updateMainPersonField('alsoParticipant', $event.target.checked)"
               />
-              <span>Ik ben ook de deelnemer</span>
+              <span>{{ $t('contactForm.isParticipant') }}</span>
             </label>
           </div>
         </div>
@@ -272,7 +258,7 @@
         />
 
         <button type="submit" :disabled="isSubmitting" class="submit-btn">
-          {{ isSubmitting ? 'Verzenden...' : 'Volgende' }}
+          {{ isSubmitting ? $t('contactForm.submitting') : $t('contactForm.next') }}
         </button>
       </Form>
     </div>
@@ -283,16 +269,16 @@
     <Transition name="modal-fade">
       <div v-if="showParticipantManager" class="modal-overlay" @click="toggleParticipantManager">
         <div class="modal-content" @click.stop>
-          <h3>Aantal deelnemers aanpassen</h3>
+          <h3>{{ $t('contactForm.participants') }}</h3>
           <div class="participant-counter">
-            <label>Aantal volwassenen:</label>
+            <label v-html="$t('contactForm.bookingFor', { count: participants.length })"></label>
             <div class="counter-controls">
               <button type="button" @click="decreaseParticipants" :disabled="participants.length <= 1">-</button>
               <span>{{ participants.length }}</span>
               <button type="button" @click="increaseParticipants">+</button>
             </div>
           </div>
-          <button type="button" @click="toggleParticipantManager" class="close-modal-btn">Sluiten</button>
+          <button type="button" @click="toggleParticipantManager" class="close-modal-btn">{{ $t('contactForm.close') }}</button>
         </div>
       </div>
     </Transition>
@@ -300,9 +286,10 @@
 </template>
 
 <script setup>
-import { ref, watch, computed } from 'vue'
+import { ref } from 'vue'
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import ParticipantForm from './ParticipantForm.vue'
+import { useI18n } from 'vue-i18n' 
 
 const props = defineProps({
   mainPerson: {
@@ -317,10 +304,10 @@ const props = defineProps({
 
 const emit = defineEmits(['next', 'update:mainPerson', 'update:participant', 'add-participant', 'remove-participant'])
 
+const { t } = useI18n()
+
 const isSubmitting = ref(false)
 const showParticipantManager = ref(false)
-const addressInfo = ref('')
-const isLoadingAddress = ref(false)
 
 const toggleParticipantManager = () => {
   showParticipantManager.value = !showParticipantManager.value
@@ -339,53 +326,6 @@ const decreaseParticipants = () => {
 const updateMainPersonField = (field, value) => {
   emit('update:mainPerson', { [field]: value })
 }
-
-const lookupAddress = async (postcode, housenumber) => {
-  // Clean up postcode (remove spaces)
-  const cleanPostcode = postcode.replace(/\s/g, '')
-  
-  // Basic validation for Dutch postcode format (1234AB)
-  if (!/^[1-9][0-9]{3}[a-zA-Z]{2}$/.test(cleanPostcode) || !housenumber) {
-    addressInfo.value = ''
-    return
-  }
-
-  isLoadingAddress.value = true
-  
-  try {
-    const response = await fetch(
-      `https://postcode.tech/api/v1/postcode/full?postcode=${cleanPostcode}&number=${housenumber}`
-    )
-    
-    if (response.ok) {
-      const data = await response.json()
-      if (data.street && data.city) {
-        addressInfo.value = `${data.street}, ${data.city}`
-      } else {
-        addressInfo.value = ''
-      }
-    } else {
-      addressInfo.value = ''
-    }
-  } catch (error) {
-    console.error('Error fetching address:', error)
-    addressInfo.value = ''
-  } finally {
-    isLoadingAddress.value = false
-  }
-}
-
-// Watch for changes in postcode and housenumber
-watch(
-  () => [props.mainPerson.postcode, props.mainPerson.housenumber],
-  ([newPostcode, newHousenumber]) => {
-    if (newPostcode && newHousenumber) {
-      lookupAddress(newPostcode, newHousenumber)
-    } else {
-      addressInfo.value = ''
-    }
-  }
-)
 
 const handleParticipantUpdate = (index, updates) => {
   emit('update:participant', index, updates)
@@ -420,62 +360,62 @@ const isValidDate = (dateString) => {
 // VeeValidate validation functions
 const validateGender = (value) => {
   if (!value || !value.trim()) {
-    return 'Kies je geslacht'
+    return t('validation.gender') // Uses i18n key
   }
   return true
 }
 
 const validateFirstname = (value) => {
   if (!value || !value.trim()) {
-    return 'Vul je voornaam in'
+    return t('validation.firstName')
   }
   return true
 }
 
 const validateLastname = (value) => {
   if (!value || !value.trim()) {
-    return 'Vul je achternaam in'
+    return t('validation.lastName')
   }
   return true
 }
 
 const validateBirthdate = (value) => {
   if (!value || !value.trim()) {
-    return 'Vul je geboortedatum in (DD-MM-JJJJ)'
+    return t('validation.birthdate')
   }
   if (!isValidDate(value)) {
-    return 'Vul je correcte geboortedatum in (DD-MM-JJJJ)'
+    return t('validation.invalidDate')
   }
   return true
 }
 
 const validatePostcode = (value) => {
   if (!value || !value.trim()) {
-    return 'Vul je postcode in'
+    return t('validation.postcode')
   }
   return true
 }
 
 const validateHousenumber = (value) => {
   if (!value || !value.trim()) {
-    return 'Vul je huisnummer in'
+    return t('validation.houseNumber')
   }
   return true
 }
 
 const validatePhone = (value) => {
   if (!value || !value.trim()) {
-    return 'Vul je telefoonnummer in'
+    return t('validation.phone')
   }
   return true
 }
 
 const validateEmail = (value) => {
   if (!value || !value.trim()) {
-    return 'Vul je e-mailadres in'
+    return t('validation.email')
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-    return 'Vul een geldig e-mailadres in'
+    return t('validation.invalidEmail')
   }
   return true
 }
@@ -483,7 +423,7 @@ const validateEmail = (value) => {
 const handleSubmit = async () => {
   isSubmitting.value = true
   
-  // Simulate API call
+  //Simulate API call
   setTimeout(() => {
     console.log('Form submitted')
     console.log('Main person:', props.mainPerson)
@@ -837,33 +777,6 @@ select:focus {
   padding: 0.6rem 0.9rem;
   border-radius: 6px;
   border: 1px solid #c8e6c9;
-}
-
-.address-label {
-  color: #556B2f;
-  font-weight: 600;
-}
-
-.address-display {
-  color: #1a1a1a;
-  font-size: 0.95rem;
-  padding: 0.7rem 0.9rem;
-  border: 1px solid #666666;
-  border-radius: 8px;
-  background: #fafafa;
-}
-
-.address-loading {
-  color: #888;
-  font-size: 0.9rem;
-  font-style: italic;
-  padding: 0.7rem 0.9rem;
-}
-
-.address-placeholder {
-  color: #aaa;
-  font-size: 0.9rem;
-  padding: 0.7rem 0.9rem;
 }
 
 .submit-btn {

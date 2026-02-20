@@ -30,3 +30,18 @@ Ive did a lot of stuff. I even implemented the form into the wordpress website.
 
 #### What should happen differently next sprint:
 * Maybe have a plan B if I'm done with plan A.
+
+
+## First Retrospective [Feb 20]
+I'm fully done with the project now. The last things I implemented were completed and reported to my supervisor. Currently waiting for something new to do
+
+I have completed a couple of features that were crucial for the frontend but also the backend logic. 
+
+#### Reflection on your progress so far:
+* I've fixed the responsiveness of the webform. I also implemented a multilanguage feature that detects the language attribute and sets the language to the same language it is on the web page thanks to vue i18n.
+
+#### Reflection on your planning/priorities this sprint:
+* Planning went well. My priorities were that I've set up a lot of stuff but ran into a lot of bugs and issues since this was a new area for me.
+
+#### What should happen differently next sprint:
+* Do more research. I did stuff myself mostly without looking at the stuff that I needed to search. I eventually hardcoded some stuff that went pretty bad at some point because of the lack of knowledge I had. But that's fixed now

@@ -1,10 +1,10 @@
 <template>
   <div class="extras-container">
     <div class="extras-wrapper">
-      <h1 class="main-title">Extra bij te boeken</h1>
-      <p class="subtitle">Hieronder kun je extra's toevoegen aan jouw boeking.</p>
+      <h1 class="main-title">{{ $t('extrasForm.mainTitle') }}</h1>
+      <p class="subtitle">{{ $t('extrasForm.subtitle') }}</p>
       <p class="skip-notice">
-        <span class="skip-link" @click="handleSkip">Dit kan ook later</span>
+        <span class="skip-link" @click="handleSkip">{{ $t('extrasForm.skip') }}</span>
       </p>
 
       <form @submit.prevent="handleSubmit" class="extras-form">
@@ -17,12 +17,12 @@
             @click="toggleSection('luggageOutbound')"
           >
             <i class="fa-light fa-chevron-down chevron" :class="{ open: openSections.luggageOutbound }"></i>
-            <span>Ruimbagage heenreis</span>
+            <span>{{ $t('extrasForm.luggageOutbound') }}</span>
           </button>
           
           <div v-show="openSections.luggageOutbound" class="section-content">
             <div v-for="(participant, index) in participants" :key="'outbound-' + index" class="participant-group">
-              <h4>Deelnemer {{ index + 1 }}</h4>
+              <h4>{{ $t('extrasForm.participant') }} {{ index + 1 }}</h4>
               
               <label :class="['option-card', { selected: extras.luggageOutbound[index] === '15kg' }]">
                 <input 
@@ -34,7 +34,7 @@
                 />
                 <span class="option-content">
                   <span class="option-text">
-                    15 kg
+                    {{ $t('extrasForm.luggage15kg') }}
                     <i class="fa-light fa-circle-question"></i>
                   </span>
                   <span class="option-price">€ 48,00</span>
@@ -51,7 +51,7 @@
                 />
                 <span class="option-content">
                   <span class="option-text">
-                    23 kg
+                    {{ $t('extrasForm.luggage23kg') }}
                     <i class="fa-light fa-circle-question"></i>
                   </span>
                   <span class="option-price">€ 58,25</span>
@@ -68,7 +68,7 @@
                 />
                 <span class="option-content">
                   <span class="option-text">
-                    26 kg
+                    {{ $t('extrasForm.luggage26kg') }}
                     <i class="fa-light fa-circle-question"></i>
                   </span>
                   <span class="option-price">€ 61,85</span>
@@ -84,7 +84,7 @@
                   @change="updateExtra('luggageOutbound', index, 'none')"
                 />
                 <span class="option-content">
-                  <span class="option-text">Nee, ik wil geen ruimbagage</span>
+                  <span class="option-text">{{ $t('extrasForm.noLuggage') }}</span>
                 </span>
               </label>
             </div>
@@ -99,12 +99,12 @@
             @click="toggleSection('luggageReturn')"
           >
             <i class="fa-light fa-chevron-down chevron" :class="{ open: openSections.luggageReturn }"></i>
-            <span>Ruimbagage terugreis</span>
+            <span>{{ $t('extrasForm.luggageReturn') }}</span>
           </button>
           
           <div v-show="openSections.luggageReturn" class="section-content">
             <div v-for="(participant, index) in participants" :key="'return-' + index" class="participant-group">
-              <h4>Deelnemer {{ index + 1 }}</h4>
+              <h4>{{ $t('extrasForm.participant') }} {{ index + 1 }}</h4>
               
               <label :class="['option-card', { selected: extras.luggageReturn[index] === '15kg' }]">
                 <input 
@@ -116,7 +116,7 @@
                 />
                 <span class="option-content">
                   <span class="option-text">
-                    15 kg
+                    {{ $t('extrasForm.luggage15kg') }}
                     <i class="fa-light fa-circle-question"></i>
                   </span>
                   <span class="option-price">€ 48,00</span>
@@ -133,7 +133,7 @@
                 />
                 <span class="option-content">
                   <span class="option-text">
-                    23 kg
+                    {{ $t('extrasForm.luggage23kg') }}
                     <i class="fa-light fa-circle-question"></i>
                   </span>
                   <span class="option-price">€ 58,25</span>
@@ -150,7 +150,7 @@
                 />
                 <span class="option-content">
                   <span class="option-text">
-                    26 kg
+                    {{ $t('extrasForm.luggage26kg') }}
                     <i class="fa-light fa-circle-question"></i>
                   </span>
                   <span class="option-price">€ 61,85</span>
@@ -166,7 +166,7 @@
                   @change="updateExtra('luggageReturn', index, 'none')"
                 />
                 <span class="option-content">
-                  <span class="option-text">Nee, ik wil geen ruimbagage</span>
+                  <span class="option-text">{{ $t('extrasForm.noLuggage') }}</span>
                 </span>
               </label>
             </div>
@@ -181,7 +181,7 @@
             @click="toggleSection('transferOutbound')"
           >
             <i class="fa-light fa-chevron-down chevron" :class="{ open: openSections.transferOutbound }"></i>
-            <span>Transfer heenreis</span>
+            <span>{{ $t('extrasForm.transferOutbound') }}</span>
           </button>
           
           <div v-show="openSections.transferOutbound" class="section-content">
@@ -195,7 +195,7 @@
               />
               <span class="option-content">
                 <span class="option-text">
-                  Groepstransfer
+                  {{ $t('extrasForm.groupTransfer') }}
                     <i class="fa-light fa-circle-question"></i>
                 </span>
                 <span class="option-price">€ 50,00</span>
@@ -212,7 +212,7 @@
               />
               <span class="option-content">
                 <span class="option-text">
-                  Privé transfer
+                  {{ $t('extrasForm.privateTransfer') }}
                     <i class="fa-light fa-circle-question"></i>
                 </span>
                 <span class="option-price">€ 80,00</span>
@@ -228,7 +228,7 @@
                 @change="updateSingleExtra('transferOutbound', 'none')"
               />
               <span class="option-content">
-                <span class="option-text">Nee, ik wil geen transfer</span>
+                <span class="option-text">{{ $t('extrasForm.noTransfer') }}</span>
               </span>
             </label>
           </div>
@@ -242,7 +242,7 @@
             @click="toggleSection('transferReturn')"
           >
             <i class="fa-light fa-chevron-down chevron" :class="{ open: openSections.transferReturn }"></i>
-            <span>Transfer terugreis</span>
+            <span>{{ $t('extrasForm.transferReturn') }}</span>
           </button>
           
           <div v-show="openSections.transferReturn" class="section-content">
@@ -256,7 +256,7 @@
               />
               <span class="option-content">
                 <span class="option-text">
-                  Groepstransfer
+                  {{ $t('extrasForm.groupTransfer') }}
                   <i class="fa-light fa-circle-question"></i>
                 </span>
                 <span class="option-price">€ 50,00</span>
@@ -273,7 +273,7 @@
               />
               <span class="option-content">
                 <span class="option-text">
-                  Privé transfer
+                  {{ $t('extrasForm.privateTransfer') }}
                   <i class="fa-light fa-circle-question"></i>
                 </span>
                 <span class="option-price">€ 80,00</span>
@@ -289,7 +289,7 @@
                 @change="updateSingleExtra('transferReturn', 'none')"
               />
               <span class="option-content">
-                <span class="option-text">Nee, ik wil geen transfer</span>
+                <span class="option-text">{{ $t('extrasForm.noTransfer') }}</span>
               </span>
             </label>
           </div>
@@ -303,14 +303,14 @@
             @click="toggleSection('travelInsurance')"
           >
             <i class="fa-light fa-chevron-down chevron" :class="{ open: openSections.travelInsurance }"></i>
-            <span>Reisverzekering</span>
+            <span>{{ $t('extrasForm.travelInsurance') }}</span>
           </button>
           
           <div v-show="openSections.travelInsurance" class="section-content">
-            <p class="section-description">Tekst met wat uitleg hier.</p>
+            <p class="section-description">{{ $t('extrasForm.choosePerParticipant') }}</p>
             
             <div v-for="(participant, index) in participants" :key="'insurance-' + index" class="participant-group">
-              <h4>Deelnemer {{ index + 1 }}</h4>
+              <h4>{{ $t('extrasForm.participant') }} {{ index + 1 }}</h4>
               
               <label :class="['option-card', { selected: extras.travelInsurance[index] === 'basis' }]">
                 <input 
@@ -322,7 +322,7 @@
                 />
                 <span class="option-content">
                   <span class="option-text">
-                    Kortlopende reisverzekering Basis
+                    {{ $t('extrasForm.insuranceBasis') }}
                     <i class="fa-light fa-circle-question"></i>
                   </span>
                   <span class="option-price">€ 7,36</span>
@@ -339,7 +339,7 @@
                 />
                 <span class="option-content">
                   <span class="option-text">
-                    Kortlopende reisverzekering Comfort
+                    {{ $t('extrasForm.insuranceComfort') }}
                     <i class="fa-light fa-circle-question"></i>
                   </span>
                   <span class="option-price">€ 8,16</span>
@@ -356,7 +356,7 @@
                 />
                 <span class="option-content">
                   <span class="option-text">
-                    Kortlopende reisverzekering Optimaal
+                    {{ $t('extrasForm.insuranceOptimaal') }}
                     <i class="fa-light fa-circle-question"></i>
                   </span>
                   <span class="option-price">€ 20,96</span>
@@ -372,7 +372,7 @@
                   @change="updateExtra('travelInsurance', index, 'none')"
                 />
                 <span class="option-content">
-                  <span class="option-text">Nee, ik wil geen verzekering</span>
+                  <span class="option-text">{{ $t('extrasForm.noTravelInsurance') }}</span>
                 </span>
               </label>
             </div>
@@ -387,11 +387,11 @@
             @click="toggleSection('cancellationInsurance')"
           >
             <i class="fa-light fa-chevron-down chevron" :class="{ open: openSections.cancellationInsurance }"></i>
-            <span>Annuleringsverzekering</span>
+            <span>{{ $t('extrasForm.cancellationInsurance') }}</span>
           </button>
           
           <div v-show="openSections.cancellationInsurance" class="section-content">
-            <p class="section-description">Tekst met wat uitleg hier.</p>
+            <p class="section-description">{{ $t('extrasForm.chooseOption') }}</p>
             
             <label :class="['option-card', { selected: extras.cancellationInsurance === 'standard' }]">
               <input 
@@ -403,7 +403,7 @@
               />
               <span class="option-content">
                 <span class="option-text">
-                  Kortlopende annuleringsverzekering
+                  {{ $t('extrasForm.insuranceStandard') }}
                     <i class="fa-light fa-circle-question"></i>
                 </span>
               </span>
@@ -419,7 +419,7 @@
               />
               <span class="option-content">
                 <span class="option-text">
-                  Kortlopende all-risk annuleringsverzekering
+                  {{ $t('extrasForm.insuranceAllRisk') }}
                     <i class="fa-light fa-circle-question"></i>
                 </span>
                 <span class="option-price">€ 286,09</span>
@@ -435,7 +435,7 @@
                 @change="updateSingleExtra('cancellationInsurance', 'none')"
               />
               <span class="option-content">
-                <span class="option-text">Nee, ik wil geen annuleringsverzekering</span>
+                <span class="option-text">{{ $t('extrasForm.noCancellationInsurance') }}</span>
               </span>
             </label>
           </div>
@@ -443,7 +443,7 @@
 
         <!-- extra stuff -->
         <div class="stay-extras">
-          <h3>Voeg toe aan je verblijf</h3>
+          <h3>{{ $t('extrasForm.stayExtras') }}</h3>
           
           <label class="checkbox-card">
             <input 
@@ -453,8 +453,8 @@
             />
             <span class="checkbox-content">
               <span class="checkbox-details">
-                <span class="checkbox-title">Schiphol Travel Taxi nodig?</span>
-                <span class="checkbox-description">Maak het jezelf makkelijk; wij regelen de beste taxi voor je rit</span>
+                <span class="checkbox-title">{{ $t('extrasForm.taxi') }}</span>
+                <span class="checkbox-description">{{ $t('extrasForm.taxiDesc') }}</span>
               </span>
               <i class="fa-light fa-plane stay-icon"></i>
             </span>
@@ -468,8 +468,8 @@
             />
             <span class="checkbox-content">
               <span class="checkbox-details">
-                <span class="checkbox-title">Auto huren?</span>
-                <span class="checkbox-description">Maak het jezelf makkelijk; wij vinden de beste deal voor je</span>
+                <span class="checkbox-title">{{ $t('extrasForm.carRental') }}</span>
+                <span class="checkbox-description">{{ $t('extrasForm.carRentalDesc') }}</span>
               </span>
               <i class="fa-light fa-car stay-icon"></i>
             </span>
@@ -483,8 +483,8 @@
             />
             <span class="checkbox-content">
               <span class="checkbox-details">
-                <span class="checkbox-title">Parkeerplek nodig?</span>
-                <span class="checkbox-description">Maak het jezelf makkelijk; wij zoeken de beste plek voor je auto</span>
+                <span class="checkbox-title">{{ $t('extrasForm.parking') }}</span>
+                <span class="checkbox-description">{{ $t('extrasForm.parkingDesc') }}</span>
               </span>
               <i class="fa-sharp fa-light fa-circle-parking stay-icon"></i>
             </span>
@@ -494,10 +494,10 @@
         <div class="form-actions">
           <button type="button" @click="handleBack" class="back-btn">
             <i class="fa-regular fa-arrow-left"></i>
-            Terug
+            {{ $t('extrasForm.back') }}
           </button>
           <button type="submit" class="submit-btn">
-            Volgende stap(3)
+            {{ $t('extrasForm.next') }}
           </button>
         </div>
       </form>
